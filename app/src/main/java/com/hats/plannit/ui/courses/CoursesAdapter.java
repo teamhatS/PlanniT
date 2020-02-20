@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +39,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.textViewCourseName.setText(courseArrayList.get(position).getName());
+        holder.textViewCourseTitle.setText(courseArrayList.get(position).getTitle());
         holder.textViewCourseTime.setText(courseArrayList.get(position).getTime());
         holder.textViewCourseLocation.setText(courseArrayList.get(position).getLocation());
 
@@ -56,14 +55,16 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         // to access the context from any ViewHolder instance.
 
         TextView textViewCourseName;
+        TextView textViewCourseTitle;
         TextView textViewCourseTime;
         TextView textViewCourseLocation;
         LinearLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textViewCourseName = itemView.findViewById(R.id.tv_course_name);
-            textViewCourseTime = itemView.findViewById(R.id.tv_course_location);
+            textViewCourseName = itemView.findViewById(R.id.tv_course_number);
+            textViewCourseTitle = itemView.findViewById(R.id.tv_course_title);
+            textViewCourseTime = itemView.findViewById(R.id.tv_course_schedule);
             textViewCourseLocation = itemView.findViewById(R.id.tv_course_location);
             parentLayout = itemView.findViewById(R.id.parent_layout_courses);
         }
