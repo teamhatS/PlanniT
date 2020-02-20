@@ -51,11 +51,11 @@ public class CoursesFragment extends Fragment {
 
     private void addUITestData(){
         Course course1 = new Course
-                ("CECS 445", "M/W 3:30PM- 4:45PM", "ECS  Room 308");
+                ("CECS 445", "Software Design and Architecture", "M/W 3:30PM- 4:45PM", "ECS  Room 308");
         Course course2 = new Course
-                ("CECS 327", "T/F 12:30PM- 1:45PM", "VEC  Room 408");
+                ("CECS 327","Introduction to Networks and Distributed Computing", "T/F 12:30PM- 1:45PM", "VEC  Room 408");
         Course course3 = new Course
-                ("CECS 378", "M/W 1:20PM- 2:45PM", "ECS  Room 228");
+                ("CECS 378","Introduction to Computer Security Principles", "M/W 1:20PM- 2:45PM", "ECS  Room 228");
         coursesList.add(course1);
         coursesList.add(course2);
         coursesList.add(course3);
