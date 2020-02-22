@@ -16,6 +16,10 @@ import com.hats.plannit.models.Course;
 
 import java.util.ArrayList;
 
+/*
+ * author: Howard chen
+ */
+
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHolder>{
     private static final String TAG = "CoursesAdapter";
     private ArrayList<Course> courseArrayList;
