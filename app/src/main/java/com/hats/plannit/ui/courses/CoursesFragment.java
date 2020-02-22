@@ -42,12 +42,6 @@ public class CoursesFragment extends Fragment {
         customersRecyclerView.setItemAnimator(new DefaultItemAnimator());
         customersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-//        coursesViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                cAdapter.notifyDataSetChanged();
-//            }
-//        });
         return root;
     }
 
