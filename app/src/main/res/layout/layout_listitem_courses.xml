@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_layout_courses"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="135dp"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="15dp">
+    android:padding="8dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -48,22 +48,26 @@
                     android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_course_schedule"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textColor="@color/colorPrimary" />
+                android:orientation="horizontal"
+                android:padding="5dp">
+                <TextView
+                    android:id="@+id/tv_course_schedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+                <TextView
+                    android:id="@+id/tv_course_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
 
-            <TextView
-                android:id="@+id/tv_course_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:padding="5dp"
-                android:textColor="@color/colorPrimary" />
-
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
