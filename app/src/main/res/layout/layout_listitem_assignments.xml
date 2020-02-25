@@ -32,8 +32,8 @@
                     android:id="@+id/tv_course_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="start"
                     android:layout_weight="1"
+                    android:gravity="start"
                     android:textColor="@color/colorPrimary"
                     android:textSize="22sp" />
 

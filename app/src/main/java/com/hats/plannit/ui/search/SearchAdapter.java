@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder>{
-    private static final String TAG = "SearchAdapter";
     private ArrayList<Assignment> assignmentArrayList;
     private Context mContext;
 
@@ -36,8 +35,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
-
         holder.textViewCourseName.setText(assignmentArrayList.get(position).getCourseName());
         holder.textViewAssignmentName.setText(assignmentArrayList.get(position).getAssignmentName());
         holder.textViewAssignmentDate.setText(assignmentArrayList.get(position).getDate());
