@@ -1,11 +1,10 @@
 package com.hats.plannit.ui.login;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.hats.plannit.R;
 import com.hats.plannit.ui.signup.SignUpView;
 
@@ -17,6 +16,7 @@ public class LoginView extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view);
+        sign_up_text = findViewById(R.id.sign_up_text);
 
         sign_up_text.setOnClickListener(new View.OnClickListener()
         {
@@ -28,4 +28,5 @@ public class LoginView extends AppCompatActivity
             }
         });
     }
+
 }
