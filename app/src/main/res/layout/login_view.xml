@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="60sp"
-        android:textStyle="bold"
+        android:textStyle="boldd"
         android:textColor="@color/white"
         android:fontFamily="@font/adreena_script_font"
         android:text="@string/app_name"/>
