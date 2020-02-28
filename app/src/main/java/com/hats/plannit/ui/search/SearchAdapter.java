@@ -47,9 +47,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // Stores the itemView in a public final member variable that can be used
-        // to access the context from any ViewHolder instance.
-
         TextView textViewCourseName;
         TextView textViewAssignmentName;
         TextView textViewAssignmentDate;
