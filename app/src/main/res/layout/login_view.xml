@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     android:scrollbarAlwaysDrawVerticalTrack="false">
 
     <ImageView
@@ -20,6 +21,7 @@
         android:layout_gravity="center"
         android:textSize="60sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         android:fontFamily="@font/adreena_script_font"
         android:text="@string/app_name"/>
 
@@ -29,16 +31,16 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
-        android:background="@drawable/brown_super_rounded_rectangle_background"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:inputType="textPersonName"
-        android:visibility="visible"
-        android:importantForAutofill="no"
-        android:singleLine="true"
+        android:background="@drawable/thistle_super_rounded_rectangle_background"
         android:gravity="center"
-        android:hint="@string/username"
-        android:textColorHint="@color/white"/>
+        android:hint="@string/student_id"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textColor="@color/blue_violet"
+        android:textColorHint="@color/blue_violet"
+        android:textStyle="bold"
+        android:visibility="visible" />
 
     <EditText
         android:id="@+id/password_edit_text"
@@ -46,16 +48,16 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:background="@drawable/brown_super_rounded_rectangle_background"
+        android:background="@drawable/thistle_super_rounded_rectangle_background"
         android:textStyle="bold"
-        android:textColor="@color/white"
+        android:textColor="@color/blue_violet"
+        android:textColorHint="@color/blue_violet"
         android:inputType="textPassword"
         android:visibility="visible"
         android:importantForAutofill="no"
         android:singleLine="true"
         android:gravity="center"
-        android:hint="@string/password"
-        android:textColorHint="@color/white"/>
+        android:hint="@string/password" />
 
     <Button
         android:id="@+id/login_button"
@@ -63,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="@drawable/light_blue_white_super_rounded_rectangle_background"
+        android:background="@drawable/white_thistle_super_rounded_rectangle_background"
         android:textAllCaps="false"
         android:textSize="15sp"
         android:text="@string/login"/>
