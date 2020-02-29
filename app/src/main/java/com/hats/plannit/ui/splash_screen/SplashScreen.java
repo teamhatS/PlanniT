@@ -13,7 +13,20 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+        final Intent intent = new Intent(this, MainActivity.class);
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                startActivity(intent);
+                finish();
+            }
+        }).start();
+
+
     }
 }
