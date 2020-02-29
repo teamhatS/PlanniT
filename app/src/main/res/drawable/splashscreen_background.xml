@@ -4,8 +4,7 @@
     <item android:drawable="@color/splashscreenBackground"/>
 
     <item>
-        <bitmap android:src="@drawable/plannit_logo"
-            android:gravity="center"/>
+        <bitmap android:src="@drawable/splash_screen"/>
     </item>
 
 </layer-list>
