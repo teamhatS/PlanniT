@@ -81,7 +81,7 @@ public class SettingsFragment extends Fragment {
     public void showNotificationPopup(View v){
         TextView exitText;
         myDialog.setContentView(R.layout.fragment_notification_settings);
-        exitText = (TextView) myDialog.findViewById(R.id.tv_exit);
+        exitText = (TextView) myDialog.findViewById(R.id.tv_exit); //not sure why its showing red.
         exitText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +94,7 @@ public class SettingsFragment extends Fragment {
     public void showSoundPopup(View v){
         TextView exitText;
         myDialog.setContentView(R.layout.fragment_sound_settings);
-        exitText = (TextView) myDialog.findViewById(R.id.tv_exit);
+        exitText = (TextView) myDialog.findViewById(R.id.tv_exit); //not sure why its showing red.
         exitText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
