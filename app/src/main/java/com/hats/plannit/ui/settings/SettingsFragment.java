@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ public class SettingsFragment extends Fragment {
     private Button buttonAccount;
     private Button buttonSound;
     private Button buttonNotification;
+
     Dialog myDialog;
 
 
@@ -31,15 +33,15 @@ public class SettingsFragment extends Fragment {
         buttonSound = root.findViewById(R.id.btn_sound_settings);
         buttonNotification = root.findViewById(R.id.btn_notification);
 
-        //settingsViewModel =
-       //         new ViewModelProvider(this).get(SettingsViewModel.class);
-        
-        settingsViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
-        });
+//        settingsViewModel =
+//                new ViewModelProvider(this).get(SettingsViewModel.class);
+//
+//        settingsViewModel.getText().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//
+//            }
+//        });
 
         myDialog = new Dialog(getContext());
 
