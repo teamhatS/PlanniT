@@ -10,13 +10,14 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_exit"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:textColor="@color/colorPrimary"
-        android:text="X"
-        android:textStyle="bold"
+        android:layout_gravity="end"
         android:gravity="center"
-        android:layout_gravity="end"></TextView>
+        android:text="X"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"></TextView>
 
     <Switch
         android:id="@+id/switch2"

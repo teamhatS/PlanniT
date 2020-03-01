@@ -10,6 +10,7 @@
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/tv_exit"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="end"

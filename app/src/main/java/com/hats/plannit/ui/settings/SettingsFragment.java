@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.hats.plannit.R;
 
+import org.w3c.dom.Text;
+
 public class SettingsFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
@@ -77,12 +79,28 @@ public class SettingsFragment extends Fragment {
     }
 
     public void showNotificationPopup(View v){
+        TextView exitText;
         myDialog.setContentView(R.layout.fragment_notification_settings);
+        exitText = (TextView) myDialog.findViewById(R.id.tv_exit);
+        exitText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
         myDialog.show();
     }
 
     public void showSoundPopup(View v){
+        TextView exitText;
         myDialog.setContentView(R.layout.fragment_sound_settings);
+        exitText = (TextView) myDialog.findViewById(R.id.tv_exit);
+        exitText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
         myDialog.show();
     }
 }
