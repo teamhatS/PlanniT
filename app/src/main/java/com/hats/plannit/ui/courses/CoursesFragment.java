@@ -33,7 +33,7 @@ public class CoursesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        coursesViewModel = new ViewModelProvider(this).get(CoursesViewModel.class);
+        //coursesViewModel = new ViewModelProvider(this).get(CoursesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_courses, container, false);
         RecyclerView customersRecyclerView =  root.findViewById(R.id.rv_courses);
         addUITestData();

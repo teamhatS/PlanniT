@@ -14,7 +14,6 @@ public class CoursesViewModel extends ViewModel {
 
     public CoursesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is courses fragment");
     }
 
     public LiveData<String> getText() {

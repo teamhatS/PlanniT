@@ -31,9 +31,8 @@ public class SettingsFragment extends Fragment {
         buttonSound = root.findViewById(R.id.btn_sound_settings);
         buttonNotification = root.findViewById(R.id.btn_notification);
 
-        settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
-
+        //settingsViewModel =
+       //         new ViewModelProvider(this).get(SettingsViewModel.class);
         
         settingsViewModel.getText().observe(this, new Observer<String>() {
             @Override
