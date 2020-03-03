@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hats.plannit.MainActivity;
+import com.hats.plannit.ui.login.LoginView;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -13,7 +14,6 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Intent intent = new Intent(this, MainActivity.class);
         new Thread(new Runnable() {
             public void run() {
                 try {
@@ -22,7 +22,9 @@ public class SplashScreen extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                Intent intent = new Intent(getApplication(), LoginView.class);
                 startActivity(intent);
+
                 finish();
             }
         }).start();
