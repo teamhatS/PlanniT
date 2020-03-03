@@ -46,11 +46,11 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Assignment a1 = new Assignment("CECS 100", "Project 1", "2/25/2020", "11:59 PM", "Description of Project !");
-                Assignment a2 = new Assignment("CECS 100", "Project 2", "3/25/2020", "11:59 PM", "Description of Project 2");
-                Assignment a3 = new Assignment("CECS 200", "Project 3", "4/25/2020", "11:59 PM", "Description of Project 3");
-                Assignment a4 = new Assignment("CECS 300", "Project 4", "5/25/2020", "11:59 PM", "Description of Project 4");
-                Assignment a5 = new Assignment("CECS 400", "Project 5", "6/25/2020", "11:59 PM", "Description of Project 5");
+                Assignment a1 = new Assignment("CECS 100", "Project 1", "2/25/2020", "11:59 PM", "Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project !", false, false);
+                Assignment a2 = new Assignment("CECS 100", "Project 2", "3/25/2020", "11:59 PM", "Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2", false, false);
+                Assignment a3 = new Assignment("CECS 200", "Project 3", "4/25/2020", "11:59 PM", "Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3", false, false);
+                Assignment a4 = new Assignment("CECS 300", "Project 4", "5/25/2020", "11:59 PM", "Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4", false, false);
+                Assignment a5 = new Assignment("CECS 400", "Project 5", "6/25/2020", "11:59 PM", "Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5", false, false);
                 ArrayList<Assignment> temp = new ArrayList<>();
                 temp.add(a1);
                 temp.add(a2);
@@ -76,11 +76,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 assignmentList.clear();
-                Assignment a1 = new Assignment("CECS 100", "Project 1", "2/25/2020", "11:59 PM", "Description of Project !");
-                Assignment a2 = new Assignment("CECS 100", "Project 2", "3/25/2020", "11:59 PM", "Description of Project 2");
-                Assignment a3 = new Assignment("CECS 200", "Project 3", "4/25/2020", "11:59 PM", "Description of Project 3");
-                Assignment a4 = new Assignment("CECS 300", "Project 4", "5/25/2020", "11:59 PM", "Description of Project 4");
-                Assignment a5 = new Assignment("CECS 400", "Project 5", "6/25/2020", "11:59 PM", "Description of Project 5");
+                Assignment a1 = new Assignment("CECS 100", "Project 1", "2/25/2020", "11:59 PM", "Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project !", false, false);
+                Assignment a2 = new Assignment("CECS 100", "Project 2", "3/25/2020", "11:59 PM", "Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2", false, false);
+                Assignment a3 = new Assignment("CECS 200", "Project 3", "4/25/2020", "11:59 PM", "Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3", false, false);
+                Assignment a4 = new Assignment("CECS 300", "Project 4", "5/25/2020", "11:59 PM", "Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4", false, false);
+                Assignment a5 = new Assignment("CECS 400", "Project 5", "6/25/2020", "11:59 PM", "Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5", false, false);
                 assignmentList.add(a1);
                 assignmentList.add(a2);
                 assignmentList.add(a3);

@@ -7,6 +7,8 @@ public class Assignment {
     private String date;
     private String time;
     private String description;
+    private Boolean complete;
+    private Boolean expanded;
 
     public Assignment(String courseName, String assignmentName, String date, String time, String description) {
         this.courseName = courseName;
@@ -14,6 +16,25 @@ public class Assignment {
         this.date = date;
         this.time = time;
         this.description = description;
+    }
+
+    public Assignment(String courseName, String assignmentName, String date, String time, String description, Boolean complete) {
+        this.courseName = courseName;
+        this.assignmentName = assignmentName;
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.complete = complete;
+    }
+
+    public Assignment(String courseName, String assignmentName, String date, String time, String description, Boolean complete, Boolean expanded) {
+        this.courseName = courseName;
+        this.assignmentName = assignmentName;
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.complete = complete;
+        this.expanded = expanded;
     }
 
     public String getCourseName() {
@@ -54,6 +75,22 @@ public class Assignment {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
+    }
+
+    public Boolean getExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
     }
 }
 

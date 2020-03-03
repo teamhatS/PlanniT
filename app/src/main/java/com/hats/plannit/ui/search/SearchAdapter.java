@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,10 +35,30 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.textViewCourseName.setText(assignmentArrayList.get(position).getCourseName());
         holder.textViewAssignmentName.setText(assignmentArrayList.get(position).getAssignmentName());
         holder.textViewAssignmentDate.setText(assignmentArrayList.get(position).getDate());
+        holder.textViewAssignmentDescription.setText(assignmentArrayList.get(position).getDescription());
+
+//        final Assignment a = assignmentArrayList.get(position);
+//        holder.assignmentDescription.setVisibility(View.GONE);
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                boolean expanded = a.getExpanded();
+//                holder.assignmentDescription.setVisibility(expanded ? View.GONE:View.VISIBLE);
+//                a.setExpanded(!expanded);
+//            }
+//        });
+        holder.assignmentDescription.setVisibility(View.GONE);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.assignmentDescription.setVisibility(assignmentArrayList.get(position).getExpanded() ? View.GONE : View.VISIBLE);
+                assignmentArrayList.get(position).setExpanded(!assignmentArrayList.get(position).getExpanded());
+            }
+        });
 
     }
 
@@ -50,6 +71,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView textViewCourseName;
         TextView textViewAssignmentName;
         TextView textViewAssignmentDate;
+        TextView textViewAssignmentDescription;
+        CheckBox checkboxAssignmentComplete;
+        View assignmentDescription;
         LinearLayout parentLayout;
 
         public ViewHolder(View itemView) {
@@ -57,6 +81,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             textViewCourseName = itemView.findViewById(R.id.tv_course_name);
             textViewAssignmentName = itemView.findViewById(R.id.tv_assignment_name);
             textViewAssignmentDate = itemView.findViewById(R.id.tv_assignment_date);
+            textViewAssignmentDescription = itemView.findViewById(R.id.tv_assignment_description);
+            checkboxAssignmentComplete = itemView.findViewById(R.id.checkBox_assignment_complete);
+            assignmentDescription = itemView.findViewById(R.id.assignment_description);
             parentLayout = itemView.findViewById(R.id.parent_layout_search);
         }
 
