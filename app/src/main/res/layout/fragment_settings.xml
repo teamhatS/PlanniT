@@ -15,6 +15,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:paddingVertical="20dp"
+        android:background="@drawable/white_thistle_super_rounded_rectangle_background"
         android:text="Account"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
@@ -23,6 +24,7 @@
         android:id="@+id/btn_sound_settings"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/white_thistle_super_rounded_rectangle_background"
         android:layout_margin="20dp"
         android:paddingVertical="20dp"
         android:text="Sound"
@@ -34,6 +36,7 @@
         android:id="@+id/btn_notification"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/white_thistle_super_rounded_rectangle_background"
         android:layout_margin="20dp"
         android:paddingVertical="20dp"
         android:text="Notification"

@@ -80,6 +80,7 @@
             android:layout_margin="20dp"
             android:paddingVertical="20dp"
             android:text="Back"
+            android:background="@drawable/white_thistle_super_rounded_rectangle_background"
             android:backgroundTint="@color/colorPrimary"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
@@ -91,6 +92,7 @@
             android:layout_margin="20dp"
             android:paddingVertical="20dp"
             android:text="Submit"
+            android:background="@drawable/white_thistle_super_rounded_rectangle_background"
             android:textColor="@android:color/white"
             android:backgroundTint="@color/colorPrimary"
             android:textSize="16sp" />
