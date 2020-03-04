@@ -1,4 +1,4 @@
-package com.hats.plannit.ui.search;
+package com.hats.plannit.models;
 
 public class Assignment {
 
