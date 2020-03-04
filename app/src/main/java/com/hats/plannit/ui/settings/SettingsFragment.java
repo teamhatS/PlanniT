@@ -22,7 +22,7 @@ public class SettingsFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
     private Button buttonAccount;
-    private Button buttonSound;
+    private Button btnAbout;
     private Button buttonNotification;
 
     Dialog myDialog;
@@ -32,8 +32,8 @@ public class SettingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         buttonAccount = root.findViewById(R.id.btn_account_settings);
-        buttonSound = root.findViewById(R.id.btn_sound_settings);
         buttonNotification = root.findViewById(R.id.btn_notification);
+        btnAbout = root.findViewById(R.id.btn_about);
 
 //        settingsViewModel =
 //                new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -54,12 +54,12 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        buttonSound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSoundPopup(v);
-            }
-        });
+//        btnAbout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         buttonNotification.setOnClickListener(new View.OnClickListener() {
             @Override
