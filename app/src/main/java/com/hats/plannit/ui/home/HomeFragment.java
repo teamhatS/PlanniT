@@ -172,7 +172,6 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
-
     private void clearFields(){
         dueDateTextView.setText("Due Date");
         dueTimeTextView.setText("Due Time");
