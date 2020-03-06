@@ -134,7 +134,8 @@ public class HomeFragment extends Fragment {
                 String assignmentName = textInputAssignmentName.getEditText().getText().toString();
                 String description = textInputAssignmentDesc.getEditText().getText().toString();
                 Assignment newAssignment = new Assignment(courseName, assignmentName,
-                                                            date, time, description );
+                                                            date, time, description,
+                                                            false, false );
                 boolean added = homeViewModel.addAssignment(newAssignment, getContext());
                 if(added){
                     clearFields();
