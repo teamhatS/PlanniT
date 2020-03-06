@@ -43,11 +43,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-//        holder.textViewCourseName.setText(courseArrayList.get(position).getName());
-//        holder.textViewCourseTitle.setText(courseArrayList.get(position).getTitle());
-//        holder.textViewCourseTime.setText(courseArrayList.get(position).getTime());
-//        holder.textViewCourseLocation.setText(courseArrayList.get(position).getLocation());
-
     }
 
     @Override
