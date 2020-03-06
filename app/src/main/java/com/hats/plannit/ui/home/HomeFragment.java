@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hats.plannit.R;
+
 /*
 @author- Howard Chen
  */
@@ -47,7 +48,6 @@ public class HomeFragment extends Fragment {
                 showAddAssignmentPopup(v);
             }
         });
-
 
 
         return root;
