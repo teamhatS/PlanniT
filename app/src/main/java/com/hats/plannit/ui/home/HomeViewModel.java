@@ -1,6 +1,7 @@
 package com.hats.plannit.ui.home;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -23,8 +24,27 @@ public class HomeViewModel extends ViewModel {
         }
         aRepo = AssignmentRepo.getInstance();
         mAssignmentList = aRepo.getAssignments();
-        List<Assignment> currentAssignments = mAssignmentList.getValue();
-        mAssignmentList.postValue(currentAssignments);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                List<Assignment> currentAssignments = mAssignmentList.getValue();
+                mAssignmentList.postValue(currentAssignments);
+
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
+
     }
 
     public boolean addAssignment(Assignment newAssignment, Context context){
