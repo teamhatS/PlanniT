@@ -44,6 +44,11 @@ public class CoursesFragment extends Fragment {
         customersRecyclerView =  root.findViewById(R.id.rv_courses);
         addCoursesButton = root.findViewById(R.id.add_courses_button);
 
+        if(!coursesList.isEmpty())
+        {
+            displayUserCourses();
+        }
+
         addCoursesButton.setOnClickListener(new View.OnClickListener()
         {
             @Override

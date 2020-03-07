@@ -24,11 +24,27 @@ public class CoursesViewModel extends ViewModel {
         return mText;
     }
 
-    public void addCourses(ArrayList<Course> availableCourseList, ArrayList<Integer> selectedItems)
+    public ArrayList<Integer> addCourses(ArrayList<Course> availableCourseList, ArrayList<Integer> selectedItems)
     {
+        ArrayList<Integer> duplicateCourses = new ArrayList<>();
+        ArrayList<Course> courseListTemp = new ArrayList<>();
+
         for(int i: selectedItems)
         {
-            CoursesFragment.coursesList.add(availableCourseList.get(i));
+            if(CoursesFragment.coursesList.contains(availableCourseList.get(i)))
+            {
+                duplicateCourses.add(i);
+            }
+            else
+            {
+                courseListTemp.add(availableCourseList.get(i));
+            }
         }
+
+        if(duplicateCourses.isEmpty())
+        {
+            CoursesFragment.coursesList.addAll(courseListTemp);
+        }
+        return duplicateCourses;
     }
 }

@@ -67,4 +67,15 @@ public class Course
     {
         return getName() + "\n" + getTitle() + "\n" + getTime() + "\n" + getLocation();
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if(object instanceof Course)
+        {
+            return this.courseNumber == ((Course)object).courseNumber;
+        }
+
+        return false;
+    }
 }
