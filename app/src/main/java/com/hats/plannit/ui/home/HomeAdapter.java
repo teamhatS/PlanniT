@@ -27,13 +27,11 @@ import java.util.List;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
     private static final String TAG = "HomeAdapter";
     private List<Assignment> assignmentsArrayList;
-    private HomeViewModel homeViewModel;
     private Context mContext;
 
-    public HomeAdapter(Context mContext,HomeViewModel homeViewModel, List<Assignment> assignmentsArrayList) {
+    public HomeAdapter(Context mContext, List<Assignment> assignmentsArrayList) {
         this.assignmentsArrayList = assignmentsArrayList;
         this.mContext = mContext;
-        this.homeViewModel = homeViewModel;
     }
 
     @NonNull

@@ -197,7 +197,7 @@ public class HomeFragment extends Fragment {
 
     private void initRecyclerViews(){
         //Assignments
-        homeAdapter = new HomeAdapter(getActivity(), homeViewModel, homeViewModel.getmAssignmentList().getValue());
+        homeAdapter = new HomeAdapter(getActivity(), homeViewModel.getmAssignmentList().getValue());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         homeRecyclerView.setLayoutManager(layoutManager);
         homeRecyclerView.setAdapter(homeAdapter);
