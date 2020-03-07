@@ -32,10 +32,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_alignParentBottom="true"
+        android:foregroundTint="@color/colorPrimary"
         android:layout_alignParentRight="true"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:layout_editor_absoluteX="329dp"
+        android:tint="@color/white"
         tools:layout_editor_absoluteY="550dp" />
 
 </RelativeLayout>
