@@ -15,12 +15,14 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hats.plannit.R;
@@ -37,6 +39,10 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private HomeViewModel homeViewModel;
+
+    private RecyclerView homeRecyclerView;
+    private HomeAdapter homeAdapter;
+
     private FloatingActionButton addAssignmentFab;
     private Button submitButton;
     private Button backButton;
@@ -58,15 +64,16 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.init();
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        homeRecyclerView = root.findViewById(R.id.rv_assignment);
         final TextView textView = root.findViewById(R.id.text_home);
         addAssignmentFab = root.findViewById(R.id.fab_add_assignment);
-//        homeViewModel.getmAssignmentList().observe(getViewLifecycleOwner(), new Observer<List<Assignment>>() {
-//                    @Override
-//                    public void onChanged(List<Assignment> assignments) {
-//                        //TODO: add recyclerview notify
-//
-//                    }
-//        });
+        homeViewModel.getmAssignmentList().observe(getViewLifecycleOwner(), new Observer<List<Assignment>>() {
+                    @Override
+                    public void onChanged(List<Assignment> assignments) {
+                        homeAdapter.notifyDataSetChanged();
+
+                    }
+        });
 
                 myDialog = new Dialog(getContext());
 
@@ -76,6 +83,7 @@ public class HomeFragment extends Fragment {
                 showAddAssignmentPopup(v);
             }
         });
+        initRecyclerViews();
 
 
         return root;
@@ -83,10 +91,9 @@ public class HomeFragment extends Fragment {
 
     private void showAddAssignmentPopup(View v) {
 
-
         Boolean complete, expanded;
-
         myDialog.setContentView(R.layout.fragment_add_assignments);
+        backButton = (Button) myDialog.findViewById(R.id.btn_add_assignment_back);
         textInputCourseName = (TextInputLayout) myDialog.findViewById(R.id.et_course_name);
         textInputAssignmentName = (TextInputLayout) myDialog.findViewById(R.id.et_assignment_name);
         textInputAssignmentDesc = (TextInputLayout) myDialog.findViewById(R.id.et_assignment_description);
@@ -127,6 +134,7 @@ public class HomeFragment extends Fragment {
             }
         };
 
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +152,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        myDialog.show();
+        myDialog.show(); //could move to the top above listeners.
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
     }
 
     private void showDatePickerPopup(View v){
@@ -178,6 +193,15 @@ public class HomeFragment extends Fragment {
         textInputCourseName.getEditText().setText("");
         textInputAssignmentName.getEditText().setText("");
         textInputAssignmentDesc.getEditText().setText("");
+    }
+
+    private void initRecyclerViews(){
+        //Assignments
+        homeAdapter = new HomeAdapter(getActivity(), homeViewModel, homeViewModel.getmAssignmentList().getValue());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        homeRecyclerView.setLayoutManager(layoutManager);
+        homeRecyclerView.setAdapter(homeAdapter);
+
     }
 
 }
