@@ -53,7 +53,8 @@ public class AssignmentRepo {
     }
 
     private void collectionListener( ){
-
+        //TODO: need to order by closest to due date.
+        // possibly add a feature to flag overdue assignments in red font
         assignmentRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
