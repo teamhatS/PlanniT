@@ -27,4 +27,6 @@
     <string name="sign_up_text">Not a member?  Become one today.  It\'s free.</string>
     <string name="create_account">Create Account</string>
     <string name="creating_msg">Better app. Better life.</string>
+    <string name="add_courses">Add courses</string>
+    <string name="add">Add</string>
 </resources>
