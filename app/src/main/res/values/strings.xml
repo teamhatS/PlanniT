@@ -27,4 +27,10 @@
     <string name="sign_up_text">Not a member?  Become one today.  It\'s free.</string>
     <string name="create_account">Create Account</string>
     <string name="creating_msg">Better app. Better life.</string>
+    <string name="about">Plannit is a new product being developed to help students manage their work efficiently and effectively.
+        The product will contain enrolled classes, associated assignments, and calendar view of assignments and class times.\n\n
+        The organization is the main basis for Plannit.
+        This software aids students in organizing their work for their enrolled classes.
+        In addition, assignments can be viewed in several formats including calendar view weekly and daily.
+    </string>
 </resources>
