@@ -2,11 +2,6 @@ package com.hats.plannit;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_search, R.id.nav_courses,
+                R.id.nav_assignments, R.id.nav_search, R.id.nav_courses,
                 R.id.nav_calendar, R.id.nav_settings, R.id.nav_signout)
                 .setDrawerLayout(drawer)
                 .build();
