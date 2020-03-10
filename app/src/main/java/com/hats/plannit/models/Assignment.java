@@ -8,6 +8,7 @@ public class Assignment {
     private String assignmentName;
     private String date;
     private String time;
+    private String studentID;
     private String description;
     private Boolean complete;
     private Boolean expanded;
@@ -22,6 +23,7 @@ public class Assignment {
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
     }
+    //TODO make constructor with studentID
 
     public Assignment(String courseName, String assignmentName, String date, String time, String description) {
         this.courseName = courseName;
@@ -48,6 +50,14 @@ public class Assignment {
         this.description = description;
         this.complete = complete;
         this.expanded = expanded;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public String getCourseName() {
