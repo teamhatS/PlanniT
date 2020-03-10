@@ -4,9 +4,9 @@
     android:id="@+id/parent_layout_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:padding="10dp"
     android:orientation="horizontal"
-    android:padding="10dp">
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -15,11 +15,13 @@
         app:cardCornerRadius="5dp"
         app:cardElevation="20dp"
         app:cardMaxElevation="25dp"
+        android:layout_gravity="center"
         app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="15dp"
             android:orientation="vertical">
 
             <TextView
@@ -28,6 +30,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="start"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
                 android:textSize="24sp"
                 />
 
