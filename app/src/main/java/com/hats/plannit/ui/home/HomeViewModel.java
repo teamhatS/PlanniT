@@ -37,7 +37,7 @@ public class HomeViewModel extends ViewModel {
             protected Void doInBackground(Void... voids) {
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
