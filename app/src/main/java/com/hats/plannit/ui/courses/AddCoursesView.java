@@ -1,10 +1,7 @@
 package com.hats.plannit.ui.courses;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -15,6 +12,7 @@ import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddCoursesView extends AppCompatActivity
 {
@@ -36,34 +34,6 @@ public class AddCoursesView extends AppCompatActivity
         final AvailableCourseListViewAdapter adapter = new AvailableCourseListViewAdapter(AddCoursesView.this, 0, CourseAsset.availableCourseList);
         addCoursesListView.setAdapter(adapter);
 
-//        ArrayList<String> coursesToString = objectToString();
-//
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.courses_view, R.id.new_course, coursesToString);
-//        addCoursesListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//        addCoursesListView.setAdapter(arrayAdapter);
-//
-//        final ArrayList<Integer> selectedItems = new ArrayList<>();
-//        final AdapterView<?>[] adapter = {null};
-//        addCoursesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                if(adapter[0] == null)
-//                {
-//                    adapter[0] = adapterView;
-//                }
-//
-//                if(selectedItems.contains(position))
-//                {
-//                    adapterView.getChildAt(position).setBackgroundColor(getResources().getColor(R.color.silver));
-//                    selectedItems.remove(new Integer(position));
-//                }
-//                else
-//                {
-//                    selectedItems.add(position);
-//                }
-//            }
-//        });
-//
         addCoursesButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -71,8 +41,7 @@ public class AddCoursesView extends AppCompatActivity
             {
                 if(!CourseAsset.courseListToBeAdded.isEmpty())
                 {
-                    //ArrayList<Integer> duplicateCourseList = CoursesFragment.courseViewModel.addCourses((ArrayList<Course>)CoursesFragment.availableCourseList, selectedItems);
-                    ArrayList<Integer> duplicateCourseList = CourseAsset.courseViewModel.addCourses(CourseAsset.availableCourseList, CourseAsset.courseListToBeAdded);
+                    List<Course> duplicateCourseList = CourseAsset.courseViewModel.addCourses(CourseAsset.courseListToBeAdded, CourseAsset.registeredCourseList, getApplicationContext());
                     if(!duplicateCourseList.isEmpty())
                     {
                         showDuplicateCourses(adapter, duplicateCourseList);
@@ -80,6 +49,7 @@ public class AddCoursesView extends AppCompatActivity
                     }
                     else
                     {
+                        CourseAsset.courseListToBeAdded = new ArrayList<>();
                         finish();
                     }
                 }
@@ -90,29 +60,22 @@ public class AddCoursesView extends AppCompatActivity
             }
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+                CourseAsset.courseListToBeAdded = new ArrayList<>();
                 finish();
             }
         });
     }
 
-    public void showDuplicateCourses(AvailableCourseListViewAdapter adapterView, ArrayList<Integer> duplicateCourseList)
+    public void showDuplicateCourses(AvailableCourseListViewAdapter adapter, List<Course> duplicateCourseList)
     {
-        for(int position: duplicateCourseList)
+        for(Course course: duplicateCourseList)
         {
-            adapterView.getChildAt(position).setBackgroundColor(Color.RED);
+            adapter.getChildAt(course).setTextColor(getResources().getColor(R.color.red));
         }
-    }
-
-    private ArrayList<String> objectToString()
-    {
-        ArrayList<String> coursesToString = new ArrayList<>();
-        for(Course course: CourseAsset.availableCourseList)
-        {
-            coursesToString.add(course.toString());
-        }
-        return coursesToString;
     }
 }

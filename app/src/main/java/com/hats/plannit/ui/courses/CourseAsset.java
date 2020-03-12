@@ -24,6 +24,7 @@ public class CourseAsset
         courseViewModel = new ViewModelProvider(coursesFragment).get(CoursesViewModel.class);
         courseViewModel.init();
         //coursesViewModel.addAllAvailableCourses(getContext());
-        availableCourseList = CourseAsset.courseViewModel.getmAvailableCourseList().getValue();
+        availableCourseList = courseViewModel.getmAvailableCourseList().getValue();
+        registeredCourseList = courseViewModel.getmRegisteredCourseList().getValue();
     }
 }

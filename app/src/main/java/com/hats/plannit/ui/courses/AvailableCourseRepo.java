@@ -26,8 +26,10 @@ public class AvailableCourseRepo
     private static final String TAG = "AvailableCourseRepo";
     private static AvailableCourseRepo instance;
     private List<Course> availableCourseList = new ArrayList<>();
+    private List<Course> registeredCourseList = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private  final CollectionReference availableCourseRef = db.collection("AvailableCourse");
+    private  final CollectionReference registeredCourseRef = db.collection("RegisteredCourse");
 
     public static AvailableCourseRepo getInstance()
     {
@@ -42,7 +44,7 @@ public class AvailableCourseRepo
     {
         if(availableCourseList.isEmpty())
         {
-            loadAvailableCourses();
+            collectionListener(availableCourseRef, availableCourseList);
         }
         MutableLiveData<List<Course>> data = new MutableLiveData<>();
         data.setValue(availableCourseList);
@@ -50,14 +52,31 @@ public class AvailableCourseRepo
         return data;
     }
 
-    private void loadAvailableCourses()
+    public MutableLiveData<List<Course>> getRegisteredCourses()
     {
-        collectionListener();
+        if(registeredCourseList.isEmpty())
+        {
+            collectionListener(registeredCourseRef, registeredCourseList);
+        }
+        MutableLiveData<List<Course>> data = new MutableLiveData<>();
+        data.setValue(registeredCourseList);
+
+        return data;
     }
 
-    private void collectionListener()
+    public void addAvailableCourse(final List<Course> newCourseList, final Context context)
     {
-        availableCourseRef.addSnapshotListener(new EventListener<QuerySnapshot>()
+        addCourse(availableCourseRef, newCourseList, context);
+    }
+
+    public void addRegisteredCourse(final List<Course> newCourseList, final Context context)
+    {
+        addCourse(registeredCourseRef, newCourseList, context);
+    }
+
+    private void collectionListener(final CollectionReference reference, final List<Course> courseList)
+    {
+        reference.addSnapshotListener(new EventListener<QuerySnapshot>()
         {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e)
@@ -68,7 +87,7 @@ public class AvailableCourseRepo
                     return;
                 }
 
-                availableCourseRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+                reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                 {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots)
@@ -79,11 +98,11 @@ public class AvailableCourseRepo
 
                             for(DocumentSnapshot documentSnapshot: list)
                             {
-                                if(!availableCourseList.contains(documentSnapshot.toObject(Course.class)))
+                                if(!courseList.contains(documentSnapshot.toObject(Course.class)))
                                 {
                                     Course newCourse = documentSnapshot.toObject(Course.class);
                                     newCourse.setCourseId(documentSnapshot.getId());
-                                    availableCourseList.add(documentSnapshot.toObject(Course.class));
+                                    courseList.add(documentSnapshot.toObject(Course.class));
                                 }
                             }
                         }
@@ -101,12 +120,11 @@ public class AvailableCourseRepo
         });
     }
 
-    public boolean addCourse(final List<Course> newCourseList, final Context context)
+    private boolean addCourse(final CollectionReference reference, final List<Course> newCourseList, final Context context)
     {
         for(Course course: newCourseList)
         {
-            System.out.println(course.toString());
-            availableCourseRef.document().set(course).addOnSuccessListener(new OnSuccessListener<Void>()
+            reference.document().set(course).addOnSuccessListener(new OnSuccessListener<Void>()
             {
                 @Override
                 public void onSuccess(Void aVoid)

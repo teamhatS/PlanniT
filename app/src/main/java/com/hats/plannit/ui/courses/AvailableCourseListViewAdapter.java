@@ -11,12 +11,14 @@ import android.widget.CheckedTextView;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AvailableCourseListViewAdapter extends ArrayAdapter<Course>
 {
     private Activity activity;
     private List<Course> availableCourseList;
+    private List<CheckedTextView> checkedTextViews;
     private static LayoutInflater inflater;
 
     public AvailableCourseListViewAdapter(Activity activity, int resource, List<Course> courses)
@@ -26,6 +28,7 @@ public class AvailableCourseListViewAdapter extends ArrayAdapter<Course>
         availableCourseList = courses;
 
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        checkedTextViews = new ArrayList<>();
     }
 
     public int getCount()
@@ -33,14 +36,9 @@ public class AvailableCourseListViewAdapter extends ArrayAdapter<Course>
         return availableCourseList.size();
     }
 
-    public Course getCourse(Course position)
+    public CheckedTextView getChildAt(Course position)
     {
-        return position;
-    }
-
-    public long getCoursePosition(int position)
-    {
-        return position;
+        return checkedTextViews.get(CourseAsset.courseListToBeAdded.indexOf(position));
     }
 
     public static class ViewHolder
@@ -76,19 +74,17 @@ public class AvailableCourseListViewAdapter extends ArrayAdapter<Course>
                 if(viewHolder.newCourse.isChecked())
                 {
                     viewHolder.newCourse.setChecked(false);
-                    viewHolder.newCourse.setBackgroundColor(view.getResources().getColor(R.color.silver));
+                    viewHolder.newCourse.setTextColor(view.getResources().getColor(R.color.black));
 
                     CourseAsset.courseListToBeAdded.remove(availableCourseList.get(position));
+                    checkedTextViews.remove(viewHolder.newCourse);
                 }
                 else
                 {
                     viewHolder.newCourse.setChecked(true);
 
                     CourseAsset.courseListToBeAdded.add(availableCourseList.get(position));
-                }
-                for(Course course: CourseAsset.courseListToBeAdded)
-                {
-                    System.out.println(course.getTitle());
+                    checkedTextViews.add(viewHolder.newCourse);
                 }
             }
         });

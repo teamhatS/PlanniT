@@ -9,16 +9,13 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.Task;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -27,6 +24,8 @@ import java.util.List;
 
 public class CoursesFragment extends Fragment
 {
+    private CoursesAdapter coursesAdapter;
+
     private Button addCoursesButton;
     private RecyclerView customersRecyclerView;
 
@@ -37,7 +36,15 @@ public class CoursesFragment extends Fragment
         addCoursesButton = root.findViewById(R.id.add_courses_button);
 
         CourseAsset.courseInit(this);
-        displayUserCourses();
+
+        CourseAsset.courseViewModel.getmRegisteredCourseList().observe(getViewLifecycleOwner(), new Observer<List<Course>>()
+        {
+            @Override
+            public void onChanged(List<Course> courseList)
+            {
+                coursesAdapter.notifyDataSetChanged();
+            }
+        });
 
         addCoursesButton.setOnClickListener(new View.OnClickListener()
         {
@@ -48,23 +55,22 @@ public class CoursesFragment extends Fragment
                 startActivityForResult(intent, 1);
             }
         });
+        initRecyclerViews();
+
         return root;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        displayUserCourses();
+        initRecyclerViews();
     }
 
-    public void displayUserCourses()
+    public void initRecyclerViews()
     {
-        if(!CourseAsset.registeredCourseList.isEmpty())
-        {
-            final CoursesAdapter cAdapter = new CoursesAdapter((ArrayList<Course>)CourseAsset.registeredCourseList, this.getContext());
-            customersRecyclerView.setAdapter(cAdapter);
-            customersRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            customersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        }
+        coursesAdapter = new CoursesAdapter(getActivity(), CourseAsset.registeredCourseList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        customersRecyclerView.setLayoutManager(layoutManager);
+        customersRecyclerView.setAdapter(coursesAdapter);
     }
 }

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /*
  * author: Howard chen
@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHolder>{
     private static final String TAG = "CoursesAdapter";
-    private ArrayList<Course> courseArrayList;
+    private List<Course> courseArrayList;
     private Context mContext;
 
-    public CoursesAdapter(ArrayList<Course> courseArrayList, Context mContext) {
+    public CoursesAdapter(Context mContext, List<Course> courseArrayList) {
         this.courseArrayList = courseArrayList;
         this.mContext = mContext;
     }
@@ -72,6 +72,5 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
             textViewCourseLocation = itemView.findViewById(R.id.tv_course_location);
             parentLayout = itemView.findViewById(R.id.parent_layout_courses);
         }
-
     }
 }

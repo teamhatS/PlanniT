@@ -3,7 +3,6 @@ package com.hats.plannit.ui.courses;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,6 +19,7 @@ public class CoursesViewModel extends ViewModel
 {
     private AvailableCourseRepo availableCourseRepo;
     private MutableLiveData<List<Course>> mAvailableCourseList;
+    private MutableLiveData<List<Course>> mRegisteredCourseList;
 
     public void init()
     {
@@ -29,23 +29,32 @@ public class CoursesViewModel extends ViewModel
         }
         availableCourseRepo = AvailableCourseRepo.getInstance();
         mAvailableCourseList = availableCourseRepo.getAvailableCourses();
+        mRegisteredCourseList = availableCourseRepo.getRegisteredCourses();
 
-//        new AsyncTask<Void, Void, Void>()
-//        {
-//            @Override
-//            protected Void doInBackground(Void... voids)
-//            {
-//                try
-//                {
-//                    Thread.sleep(1000);
-//                }
-//                catch (InterruptedException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//                return null;
-//            }
-//        }.execute();
+        new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected void onPostExecute(Void aVoid)
+            {
+                super.onPostExecute(aVoid);
+                List<Course> currentCourses = mRegisteredCourseList.getValue();
+                mRegisteredCourseList.postValue(currentCourses);
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids)
+            {
+                try
+                {
+                    Thread.sleep(1600);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
     }
 
     public MutableLiveData<List<Course>> getmAvailableCourseList()
@@ -53,26 +62,27 @@ public class CoursesViewModel extends ViewModel
         return mAvailableCourseList;
     }
 
-    public ArrayList<Integer> addCourses(List<Course> availableCourseList, List<Course> selectedItems)
+    public MutableLiveData<List<Course>> getmRegisteredCourseList()
     {
-        ArrayList<Integer> duplicateCourses = new ArrayList<>();
-        ArrayList<Course> courseListTemp = new ArrayList<>();
+        return mRegisteredCourseList;
+    }
 
-        for(int i: selectedItems)
+    public List<Course> addCourses(List<Course> courseListToBeAdded, List<Course> registeredCourseList, Context context)
+    {
+        List<Course> duplicateCourses = new ArrayList<>();
+
+        for(Course course: courseListToBeAdded)
         {
-            if(CourseAsset.registeredCourseList.contains(availableCourseList.get(i)))
+            if(registeredCourseList.contains(course))
             {
-                duplicateCourses.add(i);
-            }
-            else
-            {
-                courseListTemp.add(availableCourseList.get(i));
+                duplicateCourses.add(course);
             }
         }
 
         if(duplicateCourses.isEmpty())
         {
-            CourseAsset.registeredCourseList.addAll(courseListTemp);
+            availableCourseRepo.addRegisteredCourse(courseListToBeAdded, context);
+            registeredCourseList.addAll(courseListToBeAdded);
         }
         return duplicateCourses;
     }
@@ -92,6 +102,6 @@ public class CoursesViewModel extends ViewModel
         courseList.add(course4);
         courseList.add(course5);
 
-        availableCourseRepo.addCourse(courseList, context);
+        availableCourseRepo.addAvailableCourse(courseList, context);
     }
 }
