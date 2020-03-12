@@ -1,9 +1,8 @@
-package com.hats.plannit.ui.home;
+package com.hats.plannit.ui.assignments;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -12,7 +11,7 @@ import com.hats.plannit.repos.AssignmentRepo;
 
 import java.util.List;
 
-public class HomeViewModel extends ViewModel {
+public class AssignmentsViewModel extends ViewModel {
 
     private static final String TAG = "HomeViewModel";
     private MutableLiveData<List<Assignment>> mAssignmentList;
