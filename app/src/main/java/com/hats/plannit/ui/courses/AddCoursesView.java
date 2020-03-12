@@ -33,8 +33,7 @@ public class AddCoursesView extends AppCompatActivity
         backButton = findViewById(R.id.back_button);
         addCoursesListView = findViewById(R.id.add_courses_list_view);
 
-        AvailableCourseListViewAdapter adapter = new AvailableCourseListViewAdapter(AddCoursesView.this, 0, CourseAsset.availableCourseList);
-        addCoursesListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        final AvailableCourseListViewAdapter adapter = new AvailableCourseListViewAdapter(AddCoursesView.this, 0, CourseAsset.availableCourseList);
         addCoursesListView.setAdapter(adapter);
 
 //        ArrayList<String> coursesToString = objectToString();
@@ -65,29 +64,31 @@ public class AddCoursesView extends AppCompatActivity
 //            }
 //        });
 //
-//        addCoursesButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                if(!selectedItems.isEmpty())
-//                {
-//                    //ArrayList<Integer> duplicateCourseList = CoursesFragment.courseViewModel.addCourses((ArrayList<Course>)CoursesFragment.availableCourseList, selectedItems);
-//                    ArrayList<Integer> duplicateCourseList = CourseAsset.courseViewModel.addCourses((ArrayList<Course>)CourseAsset.availableCourseList, selectedItems);
-//                    if(!duplicateCourseList.isEmpty())
-//                    {
-//                        showDuplicateCourses(adapter, duplicateCourseList);
-//                        Toast.makeText(getApplication(), "Courses in red are already in your course list!", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else {
-//                        finish();
-//                    }
-//                }
-//                else
-//                {
-//                    Toast.makeText(getApplication(), "Please choose courses to add!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        addCoursesButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(!CourseAsset.courseListToBeAdded.isEmpty())
+                {
+                    //ArrayList<Integer> duplicateCourseList = CoursesFragment.courseViewModel.addCourses((ArrayList<Course>)CoursesFragment.availableCourseList, selectedItems);
+                    ArrayList<Integer> duplicateCourseList = CourseAsset.courseViewModel.addCourses(CourseAsset.availableCourseList, CourseAsset.courseListToBeAdded);
+                    if(!duplicateCourseList.isEmpty())
+                    {
+                        showDuplicateCourses(adapter, duplicateCourseList);
+                        Toast.makeText(getApplication(), "Courses in red are already in your course list!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        finish();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getApplication(), "Please choose courses to add!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +98,11 @@ public class AddCoursesView extends AppCompatActivity
         });
     }
 
-    public void showDuplicateCourses(AdapterView<?>[] adapterView, ArrayList<Integer> duplicateCourseList)
+    public void showDuplicateCourses(AvailableCourseListViewAdapter adapterView, ArrayList<Integer> duplicateCourseList)
     {
         for(int position: duplicateCourseList)
         {
-            adapterView[0].getChildAt(position).setBackgroundColor(Color.RED);
+            adapterView.getChildAt(position).setBackgroundColor(Color.RED);
         }
     }
 

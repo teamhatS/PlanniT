@@ -78,10 +78,7 @@ public class AvailableCourseListViewAdapter extends ArrayAdapter<Course>
                     viewHolder.newCourse.setChecked(false);
                     viewHolder.newCourse.setBackgroundColor(view.getResources().getColor(R.color.silver));
 
-                    if(CourseAsset.courseListToBeAdded.contains(availableCourseList.get(position)))
-                    {
-                        CourseAsset.courseListToBeAdded.remove(availableCourseList.get(position));
-                    }
+                    CourseAsset.courseListToBeAdded.remove(availableCourseList.get(position));
                 }
                 else
                 {
@@ -91,7 +88,7 @@ public class AvailableCourseListViewAdapter extends ArrayAdapter<Course>
                 }
                 for(Course course: CourseAsset.courseListToBeAdded)
                 {
-                    System.out.println(course.toString());
+                    System.out.println(course.getTitle());
                 }
             }
         });

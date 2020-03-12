@@ -53,7 +53,7 @@ public class CoursesViewModel extends ViewModel
         return mAvailableCourseList;
     }
 
-    public ArrayList<Integer> addCourses(ArrayList<Course> availableCourseList, ArrayList<Integer> selectedItems)
+    public ArrayList<Integer> addCourses(List<Course> availableCourseList, List<Course> selectedItems)
     {
         ArrayList<Integer> duplicateCourses = new ArrayList<>();
         ArrayList<Course> courseListTemp = new ArrayList<>();
