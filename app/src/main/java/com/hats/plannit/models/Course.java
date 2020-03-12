@@ -1,19 +1,18 @@
 package com.hats.plannit.models;
 
-import java.io.Serializable;
-
 public class Course
 {
-
     private String name;
     private String time;
     private String location;
     private String title;
-    private int courseNumber; //primary key
+    private int courseNumber;
+    private String courseId;
 
     public Course(){}
 
-    public Course(String name, String title, String time, String location, int courseNumber) {
+    public Course(String name, String title, String time, String location, int courseNumber)
+    {
         this.name = name;
         this.title = title;
         this.time = time;
@@ -61,6 +60,16 @@ public class Course
     public void setCourseNumber(int courseNumber)
     {
         this.courseNumber = courseNumber;
+    }
+
+    public String getCourseId()
+    {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId)
+    {
+        this.courseId = courseId;
     }
 
     public String toString()
