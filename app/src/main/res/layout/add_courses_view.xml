@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="330dp"
+        android:layout_height="490dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@color/silver">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="00dp"
+            android:gravity="center"
+            android:fontFamily="@font/kg_corner_of_the_sky"
+            android:textSize="30dp"
+            android:textColor="@color/colorPrimary"
+            android:text="Courses" />
+
+        <View
+            android:layout_width="280dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary" />
+
+        <ListView
+            android:id="@+id/add_courses_list_view"
+            android:layout_width="320dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/activity_horizontal_margin">
+
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="30dp"
+                android:text="@string/back"
+                android:textAllCaps="false"
+                android:fontFamily="@font/segoe_ui"
+                android:textSize="20dp"
+                android:background="@drawable/color_primary_super_rounded_rectangle_background"
+                android:textColor="@color/white">
+            </Button>
+
+            <Button
+            android:id="@+id/add_courses_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="20dp"
+            android:background="@drawable/color_primary_super_rounded_rectangle_background"
+            android:textColor="@color/white">
+            </Button>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
