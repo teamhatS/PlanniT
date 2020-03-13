@@ -64,6 +64,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -81,27 +82,35 @@ public class CalendarFragment extends Fragment
     private CompactCalendarView monthly_calendar_view;
     private SimpleDateFormat simpleDateFormat;
 
+    private TextView monthYear;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View root = inflater.inflate(R.layout.fragment_calendar_1, container, false);
+        View root = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        simpleDateFormat = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
+
+        monthYear = root.findViewById(R.id.month_year);
+        monthYear.setText(simpleDateFormat.format(new Date()));
 
         monthly_calendar_view = root.findViewById(R.id.monthly_calendar_view);
         monthly_calendar_view.setUseThreeLetterAbbreviation(true);
 
-        simpleDateFormat = new SimpleDateFormat("MMMM- yyyy", Locale.getDefault());
-
         Event ev1 = new Event(Color.GREEN, 1583693577L);
         monthly_calendar_view.addEvent(ev1);
 
-        monthly_calendar_view.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+        monthly_calendar_view.setListener(new CompactCalendarView.CompactCalendarViewListener()
+        {
             @Override
-            public void onDayClick(Date dateClicked) {
+            public void onDayClick(Date dateClicked)
+            {
                 monthly_calendar_view.addEvent(new Event(Color.GREEN, dateClicked.getTime()));
             }
 
             @Override
-            public void onMonthScroll(Date firstDayOfNewMonth) {
-
+            public void onMonthScroll(Date firstDayOfNewMonth)
+            {
+                monthYear.setText(simpleDateFormat.format(firstDayOfNewMonth));
             }
         });
         return root;
