@@ -4,7 +4,6 @@
     android:id="@+id/new_course"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     android:gravity="center_vertical"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     android:padding="5dp"
@@ -12,3 +11,6 @@
     android:textColor="@color/black"
     android:fontFamily="@font/segoe_ui">
 </CheckedTextView>
+
+
+

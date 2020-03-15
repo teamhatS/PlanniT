@@ -3,13 +3,15 @@ package com.hats.plannit.ui.courses;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.CheckedTextView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hats.plannit.R;
-import com.hats.plannit.models.Course;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,9 @@ public class AddCoursesView extends AppCompatActivity
 {
     private Button addCoursesButton;
     private Button backButton;
-    private ListView addCoursesListView;
+    private ExpandableListView addCoursesListView;
+
+    private ExpandableListAdapter expandableListAdapter;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -31,25 +35,27 @@ public class AddCoursesView extends AppCompatActivity
         backButton = findViewById(R.id.back_button);
         addCoursesListView = findViewById(R.id.add_courses_list_view);
 
-        final AvailableCourseListViewAdapter adapter = new AvailableCourseListViewAdapter(AddCoursesView.this, 0, CourseAsset.availableCourseList);
-        addCoursesListView.setAdapter(adapter);
+        expandableListAdapter = new AvailableCourseListViewAdapter(this, CourseAsset.availableSubjectList);
+        addCoursesListView.setAdapter(expandableListAdapter);
 
         addCoursesButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                if(!CourseAsset.courseListToBeAdded.isEmpty())
+                if(!CourseAsset.courses.isEmpty())
                 {
-                    List<Course> duplicateCourseList = CourseAsset.courseViewModel.addCourses(CourseAsset.courseListToBeAdded, CourseAsset.registeredCourseList, getApplicationContext());
+                    List<CheckedTextView> duplicateCourseList = CourseAsset.courseViewModel.addCourses(CourseAsset.courseListToBeAdded, CourseAsset.registeredCourseList, CourseAsset.checkedTextViewList, getApplicationContext());
                     if(!duplicateCourseList.isEmpty())
                     {
-                        showDuplicateCourses(adapter, duplicateCourseList);
+                        showDuplicateCourses(duplicateCourseList);
                         Toast.makeText(getApplication(), "Courses in red are already in your course list!", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
                         CourseAsset.courseListToBeAdded = new ArrayList<>();
+                        CourseAsset.checkedTextViewList = new ArrayList<>();
+                        CourseAsset.courses = new ArrayList<>();
                         finish();
                     }
                 }
@@ -66,16 +72,18 @@ public class AddCoursesView extends AppCompatActivity
             public void onClick(View view)
             {
                 CourseAsset.courseListToBeAdded = new ArrayList<>();
+                CourseAsset.checkedTextViewList = new ArrayList<>();
+                CourseAsset.courses = new ArrayList<>();
                 finish();
             }
         });
     }
 
-    public void showDuplicateCourses(AvailableCourseListViewAdapter adapter, List<Course> duplicateCourseList)
+    public void showDuplicateCourses(List<CheckedTextView> duplicateCourseList)
     {
-        for(Course course: duplicateCourseList)
+        for(int i = 0; i < duplicateCourseList.size(); i++)
         {
-            adapter.getChildAt(course).setTextColor(getResources().getColor(R.color.red));
+            duplicateCourseList.get(i).setTextColor(getResources().getColor(R.color.red));
         }
     }
 }

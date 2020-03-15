@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
+import com.hats.plannit.models.Subject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -25,28 +27,30 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
     private List<Course> courseArrayList;
     private Context mContext;
 
-    public CoursesAdapter(Context mContext, List<Course> courseArrayList) {
+    public CoursesAdapter(Context mContext, List<Course> courseArrayList)
+    {
         this.courseArrayList = courseArrayList;
         this.mContext = mContext;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem_courses, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder,final int position)
+    {
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.textViewCourseName.setText(courseArrayList.get(position).getName());
         holder.textViewCourseTitle.setText(courseArrayList.get(position).getTitle());
         holder.textViewCourseTime.setText(courseArrayList.get(position).getTime());
         holder.textViewCourseLocation.setText(courseArrayList.get(position).getLocation());
-
     }
 
     @Override

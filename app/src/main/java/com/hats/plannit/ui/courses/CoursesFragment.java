@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
+import com.hats.plannit.models.Subject;
 
 import java.util.List;
 
@@ -61,7 +62,8 @@ public class CoursesFragment extends Fragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
         initRecyclerViews();
     }
