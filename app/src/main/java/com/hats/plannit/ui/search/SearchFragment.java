@@ -60,6 +60,8 @@ public class SearchFragment extends Fragment {
                     Collections.sort(assignmentList, new Comparator<Assignment>() {
                         @Override
                         public int compare(Assignment a, Assignment b) {
+                            if(a.getCourseName()==null || b.getCourseName()==null)
+                                return 1;
                             return a.getCourseName().compareTo(b.getCourseName());
                         }
                     });
