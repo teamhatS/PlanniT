@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search" >
+        app:layout_constraintTop_toBottomOf="@id/search"
+        android:padding="20dp">
 
         <CheckBox
             android:id="@+id/search_cb1"
