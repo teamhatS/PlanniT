@@ -1,7 +1,6 @@
 package com.hats.plannit.ui.search;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hats.plannit.R;
+import com.hats.plannit.models.Assignment;
 
 import java.util.ArrayList;
 
@@ -72,6 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView textViewAssignmentName;
         TextView textViewAssignmentDate;
         TextView textViewAssignmentDescription;
+        TextView textViewAssignmentTime;
         CheckBox checkboxAssignmentComplete;
         View assignmentDescription;
         LinearLayout parentLayout;
@@ -81,6 +82,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             textViewCourseName = itemView.findViewById(R.id.tv_course_name);
             textViewAssignmentName = itemView.findViewById(R.id.tv_assignment_name);
             textViewAssignmentDate = itemView.findViewById(R.id.tv_assignment_date);
+            textViewAssignmentTime = itemView.findViewById(R.id.tv_assignment_time);
             textViewAssignmentDescription = itemView.findViewById(R.id.tv_assignment_description);
             checkboxAssignmentComplete = itemView.findViewById(R.id.checkBox_assignment_complete);
             assignmentDescription = itemView.findViewById(R.id.assignment_description);
