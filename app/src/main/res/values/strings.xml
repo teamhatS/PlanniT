@@ -7,12 +7,13 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_assignments">Assignments</string>
     <string name="menu_search">Search</string>
     <string name="menu_courses">Courses</string>
     <string name="menu_calendar">Calendar</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_signout">Sign out</string>
+    <string name="menu_help">Help</string>
 
     <string name="student_id">Student ID</string>
     <string name="student_id_with_hint">Student ID (9-10 digits)</string>
@@ -27,4 +28,29 @@
     <string name="sign_up_text">Not a member?  Become one today.  It\'s free.</string>
     <string name="create_account">Create Account</string>
     <string name="creating_msg">Better app. Better life.</string>
+    <string name="about">Plannit is a new product being developed to help students manage their work efficiently and effectively.
+        The product will contain enrolled classes, associated assignments, and calendar view of assignments and class times.\n\n
+        The organization is the main basis for Plannit.
+        This software aids students in organizing their work for their enrolled classes.
+        In addition, assignments can be viewed in several formats including calendar view weekly and daily.
+    </string>
+    <string name="help_answer1">The courses listed are those provided by the university as well
+        as additions suggested by users.  \n\nIf you would like your course to be included, fill out the
+        form for course addition.  Your submission will be reviewed and verified.  If it is authorized
+        then your course will be added to the list.
+    </string>
+    <string name="help_answer2">At this time, custom courses are not supported.  That is a feature
+        that may be added in the future if enough users would like to have it.
+    </string>
+    <string name="help_answer3">At this time, custom courses are not supported.  That is a feature
+        that may be added in the future if enough users would like to have it.
+    </string>
+    <string name="help_answer4">Notification sounds can be customized through the user settings.
+        \n\nTo change those settings navigate to the settings icon in the sidebar.
+        \nClick on the Notification button and adjust the settings.
+    </string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

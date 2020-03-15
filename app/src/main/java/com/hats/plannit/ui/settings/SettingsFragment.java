@@ -24,6 +24,7 @@ public class SettingsFragment extends Fragment {
     private Button buttonAccount;
     private Button btnAbout;
     private Button buttonNotification;
+    private Button btnContact;
 
     Dialog myDialog;
 
@@ -34,6 +35,7 @@ public class SettingsFragment extends Fragment {
         buttonAccount = root.findViewById(R.id.btn_account_settings);
         buttonNotification = root.findViewById(R.id.btn_notification);
         btnAbout = root.findViewById(R.id.btn_about);
+        btnContact = root.findViewById(R.id.btn_contact);
 
 //        settingsViewModel =
 //                new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -68,6 +70,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        btnAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutPopup(v);
+            }
+        });
+
+        btnContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showContactPopup(v);
+            }
+        });
 
         return root;
 
@@ -101,6 +116,16 @@ public class SettingsFragment extends Fragment {
                 myDialog.dismiss();
             }
         });
+        myDialog.show();
+    }
+
+    public void showAboutPopup(View v){
+        myDialog.setContentView(R.layout.fragment_about_settings);
+        myDialog.show();
+    }
+
+    public void showContactPopup(View v){
+        myDialog.setContentView(R.layout.fragment_contact_settings);
         myDialog.show();
     }
 }
