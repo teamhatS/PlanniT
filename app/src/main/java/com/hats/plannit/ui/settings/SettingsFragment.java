@@ -2,12 +2,15 @@ package com.hats.plannit.ui.settings;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -34,10 +37,17 @@ public class SettingsFragment extends Fragment {
     private EditText editTextPassword;
     private EditText editTextConfirmPassword;
     private EditText editTextEmail;
+
+    private TextInputLayout editTextLayoutUsername;
+    private EditText editTextPassword;
+    private EditText editTextConfirmPassword;
+
     private Button submitAccountSettingsButton;
     private Student loggedInStudent;
     private String studentNickname;
     private String studentEmail;
+    private Button btnContact;
+
 
     Dialog myDialog;
 
@@ -48,6 +58,7 @@ public class SettingsFragment extends Fragment {
         buttonAccount = root.findViewById(R.id.btn_account_settings);
         buttonNotification = root.findViewById(R.id.btn_notification);
         btnAbout = root.findViewById(R.id.btn_about);
+        btnContact = root.findViewById(R.id.btn_contact);
 
         settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -97,6 +108,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        btnAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutPopup(v);
+            }
+        });
+
+        btnContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showContactPopup(v);
+            }
+        });
 
         return root;
 
@@ -112,7 +136,10 @@ public class SettingsFragment extends Fragment {
         submitAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                validateInput(v);
+
                 //TODO:: store changes into viewmodel repo.
+
                 if(!editTextNickname.getText().toString().equals("")){
 
                 }
@@ -149,4 +176,84 @@ public class SettingsFragment extends Fragment {
         });
         myDialog.show();
     }
+
+    public void showAboutPopup(View v){
+        myDialog.setContentView(R.layout.fragment_about_settings);
+        myDialog.show();
+    }
+
+    public void showContactPopup(View v){
+        myDialog.setContentView(R.layout.fragment_contact_settings);
+        myDialog.show();
+    }
+
+
+    public void validateInput(View v) {
+        if(!validateUsername() | !validateLname() | !validateEmail() | !validatePhone()) {
+            return;
+        }
+
+        Customer c1 = new Customer(
+                editTextNickname.getText().toString(),
+                addCustomerLname.getEditText().getText().toString(),
+                addCustomerEmail.getEditText().getText().toString(),
+                addCustomerEmail.getEditText().getText().toString(),
+                addCustomerReceiptText.isChecked(),
+                addCustomerReceiptEmail.isChecked()
+        );
+
+        Log.i("add_customer", c1.toString());
+    }
+    private boolean validateUsername() {
+        String UnameInput = editTextNickname.getText().toString().trim();
+        if(UnameInput.isEmpty()) {
+            addCustomerFname.setError("Field can't be empty");
+            return false;
+        } else {
+            addCustomerFname.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword() {
+        String LnameInput = addCustomerLname.getEditText().getText().toString().trim();
+        if(LnameInput.isEmpty()) {
+            addCustomerLname.setError("Field can't be empty");
+            return false;
+        } else {
+            addCustomerLname.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateEmail() {
+        String emailInput = addCustomerEmail.getEditText().getText().toString().trim();
+        if(emailInput.isEmpty()) {
+            addCustomerEmail.setError("Field can't be empty");
+            return false;
+        } else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            addCustomerEmail.setError("Invalid email address");
+            return false;
+        } else {
+            addCustomerEmail.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePhone() {
+        String regexPhone = "^[0-9]+$";
+        String phoneInput = addCustomerPhone.getEditText().getText().toString().trim();
+        if (phoneInput.isEmpty()) {
+            addCustomerPhone.setError("Field can't be empty");
+            return false;
+        } else if (phoneInput.length() < 10 || !phoneInput.matches(regexPhone)) {
+            addCustomerPhone.setError("Invalid phone number");
+            return false;
+        } else {
+            addCustomerPhone.setError(null);
+            return true;
+        }
+    }
+
+
 }

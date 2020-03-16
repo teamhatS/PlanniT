@@ -28,8 +28,9 @@ public class AssignmentRepo {
     private static AssignmentRepo instance;
     private ArrayList<Assignment> dataSet = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String idNum = "123456";
     private  final CollectionReference assignmentRef =
-            db.collection("Assignment");
+            db.collection("Student").document(idNum).collection("Assignment");
 
 
     //Singleton Pattern
