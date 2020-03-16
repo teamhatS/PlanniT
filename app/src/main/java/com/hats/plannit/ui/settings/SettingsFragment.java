@@ -2,7 +2,6 @@ package com.hats.plannit.ui.settings;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -20,10 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.hats.plannit.R;
-import com.hats.plannit.models.Assignment;
 import com.hats.plannit.models.Student;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -33,19 +27,17 @@ public class SettingsFragment extends Fragment {
     private Button buttonAccount;
     private Button btnAbout;
     private Button buttonNotification;
-    private EditText editTextNickname;
+    private EditText editTextUsername;
     private EditText editTextPassword;
     private EditText editTextConfirmPassword;
     private EditText editTextEmail;
-
     private TextInputLayout editTextLayoutUsername;
-    private EditText editTextPassword;
-    private EditText editTextConfirmPassword;
-
+    private TextInputLayout editTextLayoutPassword;
+    private TextInputLayout editTextLayoutConfirmPassword;
+    private TextInputLayout editTextLayoutEmail;
+    private Button backAccountSettingsButton;
     private Button submitAccountSettingsButton;
     private Student loggedInStudent;
-    private String studentNickname;
-    private String studentEmail;
     private Button btnContact;
 
 
@@ -70,7 +62,8 @@ public class SettingsFragment extends Fragment {
                 if(students.size() > 0) {
                     for (Student student : students) {
                         if (student.getLoggedIn()) {
-                            editTextNickname.setText(student.getNickname());
+                            loggedInStudent = student;
+                            editTextLayoutUsername.getEditText().setText(student.getUsername());
                             editTextEmail.setText(student.getEmail());
                         }
                     }
@@ -93,13 +86,6 @@ public class SettingsFragment extends Fragment {
                 showAccountPopup(v);
             }
         });
-
-//        btnAbout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
         buttonNotification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,27 +114,44 @@ public class SettingsFragment extends Fragment {
 
     public void showAccountPopup(View v){
         myDialog.setContentView(R.layout.fragment_account_settings);
-        editTextNickname = myDialog.findViewById(R.id.et_settings_nickname);
+        editTextLayoutUsername = myDialog.findViewById(R.id.til_settings_username);
+        editTextLayoutConfirmPassword = myDialog.findViewById(R.id.til_settings_confirm_password);
+        editTextLayoutPassword = myDialog.findViewById(R.id.til_settings_password);
+        editTextLayoutEmail= myDialog.findViewById(R.id.til_settings_email);
+
+        editTextUsername = myDialog.findViewById(R.id.et_settings_username);
         editTextEmail = myDialog.findViewById(R.id.et_settings_email);
         editTextPassword = myDialog.findViewById(R.id.et_settings_password);
         editTextConfirmPassword = myDialog.findViewById(R.id.et_settings_confirm_password);
         submitAccountSettingsButton = myDialog.findViewById(R.id.btn_account_settings_submit);
+        backAccountSettingsButton = myDialog.findViewById(R.id.btn_account_settings_back);
         submitAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validateInput(v);
+                String userName = editTextLayoutUsername.getEditText().getText().toString().trim();
+                String password = editTextLayoutPassword.getEditText().getText().toString();
+                String passwordConfirm = editTextLayoutConfirmPassword.getEditText().getText().toString();
+                String emailInput = editTextLayoutEmail.getEditText().getText().toString().trim();
 
-                //TODO:: store changes into viewmodel repo.
-
-                if(!editTextNickname.getText().toString().equals("")){
-
+                boolean validatedInputs = validateInput(v, userName , password, passwordConfirm, emailInput ); //validate inputs
+                if(validatedInputs){
+                    loggedInStudent.setUsername(userName);
+                    loggedInStudent.setEmail(emailInput);
+                    loggedInStudent.setPassword(password);
+                    settingsViewModel.updateStudentAccount(getContext(), loggedInStudent);
                 }
-                if(!editTextConfirmPassword.getText().toString().equals("")){
 
-                }
+
             }
         });
         myDialog.show();
+
+        backAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
     }
 
     public void showNotificationPopup(View v){
@@ -164,18 +167,6 @@ public class SettingsFragment extends Fragment {
         myDialog.show();
     }
 
-    public void showSoundPopup(View v){
-        TextView exitText;
-        myDialog.setContentView(R.layout.fragment_sound_settings);
-        exitText = (TextView) myDialog.findViewById(R.id.tv_exit);
-        exitText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.show();
-    }
 
     public void showAboutPopup(View v){
         myDialog.setContentView(R.layout.fragment_about_settings);
@@ -188,72 +179,56 @@ public class SettingsFragment extends Fragment {
     }
 
 
-    public void validateInput(View v) {
-        if(!validateUsername() | !validateLname() | !validateEmail() | !validatePhone()) {
-            return;
+    public boolean validateInput(View v, String username, String password, String passwordConfirm, String email) {
+        if(!validateUsername(username) | !validatePassword(password, passwordConfirm) | !validateEmail(email)) {
+            return false;
         }
-
-        Customer c1 = new Customer(
-                editTextNickname.getText().toString(),
-                addCustomerLname.getEditText().getText().toString(),
-                addCustomerEmail.getEditText().getText().toString(),
-                addCustomerEmail.getEditText().getText().toString(),
-                addCustomerReceiptText.isChecked(),
-                addCustomerReceiptEmail.isChecked()
-        );
-
-        Log.i("add_customer", c1.toString());
+        return true;
     }
-    private boolean validateUsername() {
-        String UnameInput = editTextNickname.getText().toString().trim();
-        if(UnameInput.isEmpty()) {
-            addCustomerFname.setError("Field can't be empty");
+    private boolean validateUsername(String username) {
+
+        if(username.isEmpty()) {
+            editTextLayoutUsername.setError("Field can't be empty");
             return false;
         } else {
-            addCustomerFname.setError(null);
+            editTextLayoutUsername.setError(null);
             return true;
         }
     }
 
-    private boolean validatePassword() {
-        String LnameInput = addCustomerLname.getEditText().getText().toString().trim();
-        if(LnameInput.isEmpty()) {
-            addCustomerLname.setError("Field can't be empty");
+    private boolean validatePassword(String password, String passwordConfirm) {
+
+        if(password.isEmpty()) {
+            editTextLayoutPassword.setError("Field can't be empty");
             return false;
-        } else {
-            addCustomerLname.setError(null);
+        } else if (!password.equals(passwordConfirm)){
+            editTextLayoutPassword.setError("Passwords should match!");
+            editTextLayoutConfirmPassword.setError("Passwords should match!");
+            return false;
+        }else if(password.length() != 10 && passwordConfirm.length() != 10){
+            editTextLayoutPassword.setError("Password needs to be 10 characters long");
+            editTextConfirmPassword.setError("Password needs to be 10 characters long");
+            return false;
+        }else {
+            editTextLayoutPassword.setError(null);
+            editTextLayoutConfirmPassword.setError(null);
             return true;
         }
     }
 
-    private boolean validateEmail() {
-        String emailInput = addCustomerEmail.getEditText().getText().toString().trim();
+    private boolean validateEmail(String emailInput) {
         if(emailInput.isEmpty()) {
-            addCustomerEmail.setError("Field can't be empty");
+            editTextLayoutEmail.setError("Field can't be empty");
             return false;
         } else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            addCustomerEmail.setError("Invalid email address");
+            editTextLayoutEmail.setError("Invalid email address");
             return false;
         } else {
-            addCustomerEmail.setError(null);
+            editTextLayoutEmail.setError(null);
             return true;
         }
     }
 
-    private boolean validatePhone() {
-        String regexPhone = "^[0-9]+$";
-        String phoneInput = addCustomerPhone.getEditText().getText().toString().trim();
-        if (phoneInput.isEmpty()) {
-            addCustomerPhone.setError("Field can't be empty");
-            return false;
-        } else if (phoneInput.length() < 10 || !phoneInput.matches(regexPhone)) {
-            addCustomerPhone.setError("Invalid phone number");
-            return false;
-        } else {
-            addCustomerPhone.setError(null);
-            return true;
-        }
-    }
 
 
 }
