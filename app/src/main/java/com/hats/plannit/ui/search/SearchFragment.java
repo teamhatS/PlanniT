@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,49 +21,88 @@ import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
 
     private SearchViewModel searchViewModel;
-    private ArrayList<Assignment> assignmentList = new ArrayList<>();
+    private List<Assignment> assignmentList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        searchViewModel =
-                ViewModelProviders.of(this).get(SearchViewModel.class);
+        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        searchViewModel.init();
+
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
-
         RecyclerView customersRecyclerView =  root.findViewById(R.id.rv_search);
+        final List<Assignment> o = searchViewModel.getmAssignmentList().getValue();
+        assignmentList.addAll(o);
         final SearchAdapter searchAdapter = new SearchAdapter(assignmentList, this.getContext());
         customersRecyclerView.setAdapter(searchAdapter);
         customersRecyclerView.setItemAnimator(new DefaultItemAnimator());
         customersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
+        final CheckBox cb1 = root.findViewById(R.id.search_cb1);
+        final CheckBox cb2 = root.findViewById(R.id.search_cb2);
         final SearchView searchView = root.findViewById(R.id.search);
         searchView.setSubmitButtonEnabled(true);
         searchView.setIconifiedByDefault(false);
+        int sb = searchView.getContext().getResources()
+                .getIdentifier("android:id/search_close_btn", null, null);
+        ImageView cb = searchView.findViewById(sb);
+        cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Collections.sort(assignmentList, new Comparator<Assignment>() {
+                        @Override
+                        public int compare(Assignment a, Assignment b) {
+                            if(a.getCourseName()==null || b.getCourseName()==null)
+                                return 1;
+                            return a.getCourseName().compareTo(b.getCourseName());
+                        }
+                    });
+                    searchAdapter.notifyDataSetChanged();
+                }
+
+            }
+        });        cb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                assignmentList.clear();
+                assignmentList.addAll(o);
+                searchAdapter.notifyDataSetChanged();
+            }
+        });
+        cb2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Collections.sort(assignmentList, new Comparator<Assignment>() {
+                        @Override
+                        public int compare(Assignment a, Assignment b) {
+                            if(a.getDate()==null || b.getDate()==null)
+                                return 1;
+                            return a.getDate().compareTo(b.getDate());
+                        }
+                    });
+                    searchAdapter.notifyDataSetChanged();
+                }
+
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Assignment a1 = new Assignment("CECS 100", "Project 1", "2/25/2020", "11:59 PM", "Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project !", false, false);
-                Assignment a2 = new Assignment("CECS 100", "Project 2", "3/25/2020", "11:59 PM", "Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2", false, false);
-                Assignment a3 = new Assignment("CECS 200", "Project 3", "4/25/2020", "11:59 PM", "Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3", false, false);
-                Assignment a4 = new Assignment("CECS 300", "Project 4", "5/25/2020", "11:59 PM", "Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4", false, false);
-                Assignment a5 = new Assignment("CECS 400", "Project 5", "6/25/2020", "11:59 PM", "Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5", false, false);
-                ArrayList<Assignment> temp = new ArrayList<>();
-                temp.add(a1);
-                temp.add(a2);
-                temp.add(a3);
-                temp.add(a4);
-                temp.add(a5);
-
                 assignmentList.clear();
-                for(Assignment a : temp)
+                for(Assignment a : o)
                     if(a.getCourseName().equals(searchView.getQuery().toString()))
                         assignmentList.add(a);
                 searchAdapter.notifyDataSetChanged();
+
                 return false;
             }
 
@@ -69,23 +112,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                assignmentList.clear();
-                Assignment a1 = new Assignment("CECS 100", "Project 1", "2/25/2020", "11:59 PM", "Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project ! Description of Project !", false, false);
-                Assignment a2 = new Assignment("CECS 100", "Project 2", "3/25/2020", "11:59 PM", "Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2 Description of Project 2", false, false);
-                Assignment a3 = new Assignment("CECS 200", "Project 3", "4/25/2020", "11:59 PM", "Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3 Description of Project 3", false, false);
-                Assignment a4 = new Assignment("CECS 300", "Project 4", "5/25/2020", "11:59 PM", "Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4 Description of Project 4", false, false);
-                Assignment a5 = new Assignment("CECS 400", "Project 5", "6/25/2020", "11:59 PM", "Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5 Description of Project 5", false, false);
-                assignmentList.add(a1);
-                assignmentList.add(a2);
-                assignmentList.add(a3);
-                assignmentList.add(a4);
-                assignmentList.add(a5);
-                searchAdapter.notifyDataSetChanged();
-            }
-        });
         return root;
     }
 }

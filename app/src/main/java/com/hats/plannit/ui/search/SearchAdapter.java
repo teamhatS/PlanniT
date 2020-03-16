@@ -15,13 +15,14 @@ import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder>{
-    private ArrayList<Assignment> assignmentArrayList;
+    private List<Assignment> assignmentArrayList;
     private Context mContext;
 
-    public SearchAdapter(ArrayList<Assignment> assignmentArrayList, Context mContext) {
+    public SearchAdapter(List<Assignment> assignmentArrayList, Context mContext) {
         this.assignmentArrayList = assignmentArrayList;
         this.mContext = mContext;
     }
