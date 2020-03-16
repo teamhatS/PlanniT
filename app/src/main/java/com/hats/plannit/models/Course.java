@@ -1,19 +1,23 @@
 package com.hats.plannit.models;
 
-public class Course {
-
+public class Course
+{
     private String name;
     private String time;
     private String location;
     private String title;
+    private int courseNumber;
+    private String courseId;
 
     public Course(){}
 
-    public Course(String name, String title, String time, String location) {
+    public Course(String name, String title, String time, String location, int courseNumber)
+    {
         this.name = name;
         this.title = title;
         this.time = time;
         this.location = location;
+        this.courseNumber = courseNumber;
     }
 
     public String getName() {
@@ -46,5 +50,41 @@ public class Course {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getCourseNumber()
+    {
+        return courseNumber;
+    }
+
+    public void setCourseNumber(int courseNumber)
+    {
+        this.courseNumber = courseNumber;
+    }
+
+    public String getCourseId()
+    {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId)
+    {
+        this.courseId = courseId;
+    }
+
+    public String toString()
+    {
+        return getName() + "\n" + getTitle() + "\n" + getTime() + "\n" + getLocation();
+    }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if(object instanceof Course)
+        {
+            return this.courseNumber == ((Course)object).courseNumber;
+        }
+
+        return false;
     }
 }

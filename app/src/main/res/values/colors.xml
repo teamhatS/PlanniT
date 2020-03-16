@@ -20,9 +20,10 @@
     <color name="dark_magenta">#8B008B</color>
     <color name="purple">#800080</color>
     <color name="gainsboro">#DCDCDC</color>
-    <color name="lightgrey">#D3D3D3</color>
+    <color name="light_grey">#D3D3D3</color>
     <color name="silver">#C0C0C0</color>
     <color name="grey">#808080</color>
     <color name="red">#FF0000</color>
     <color name="splashscreenBackground">#808080</color>
+    <color name="lawn_green">#7CFC00</color>
 </resources>
