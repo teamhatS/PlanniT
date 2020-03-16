@@ -65,6 +65,9 @@ public class SettingsViewModel extends ViewModel {
         }
         mLoggedInStudent.setValue(loggedInStudent);
     }
+    public void updateStudentAccount(Context context, Student student){
+        sRepo.updateStudentAccount(context, student);
+    }
 
     public MutableLiveData<Student> getmLoggedInStudent() {
         return mLoggedInStudent;
@@ -73,4 +76,5 @@ public class SettingsViewModel extends ViewModel {
     public MutableLiveData<List<Student>> getMStudentList() {
         return mStudentList;
     }
+
 }
