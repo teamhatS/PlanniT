@@ -1,6 +1,9 @@
 package com.hats.plannit.repos;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
@@ -92,6 +95,24 @@ public class StudentRepo {
             }
         }
         return null;
+    }
+
+    public void updateStudentAccount(final Context context, Student student){
+        studentRef.document(student.getStudentID()).set(student)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Student Account Updated.", Toast.LENGTH_LONG).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: " + e.toString() );
+
+            }
+        });
+
     }
 
 }
