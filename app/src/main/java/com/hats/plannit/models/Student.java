@@ -7,18 +7,18 @@ public class Student {
     private String lastName;
     private String email;
     private String password;
-    private String nickname;
+    private String username;
     private Boolean loggedIn;
 
     public Student(){}
 
-    public Student(String studentID, String firstName, String lastName, String email, String password, String nickname, Boolean loggedIn) {
+    public Student(String studentID, String firstName, String lastName, String email, String password, String username, Boolean loggedIn) {
         this.studentID = studentID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
+        this.username = username;
         this.loggedIn = loggedIn;
     }
 
@@ -70,11 +70,11 @@ public class Student {
         this.password = password;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
