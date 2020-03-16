@@ -5,9 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_assignments"
             android:icon="@mipmap/ic_launcher_round"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_assignments" />
         <item
             android:id="@+id/nav_search"
             android:icon="@android:drawable/ic_menu_search"
@@ -25,9 +25,14 @@
     <item android:title="Tools">
         <menu>
             <item
+                android:id="@+id/nav_help"
+                android:icon="@android:drawable/ic_menu_help"
+                android:title="@string/menu_help" />
+            <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/menu_settings" />
+
             <item
                 android:id="@+id/nav_signout"
                 android:icon="@drawable/ic_menu_send"

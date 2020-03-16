@@ -1,14 +1,29 @@
-package com.hats.plannit.ui.search;
+package com.hats.plannit.models;
+
+import com.google.firebase.firestore.Exclude;
 
 public class Assignment {
-
+    private String documentId;
     private String courseName;
     private String assignmentName;
     private String date;
     private String time;
+    private String studentID;
     private String description;
     private Boolean complete;
     private Boolean expanded;
+
+    public Assignment(){}
+
+    @Exclude
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+    //TODO make constructor with studentID
 
     public Assignment(String courseName, String assignmentName, String date, String time, String description) {
         this.courseName = courseName;
@@ -35,6 +50,14 @@ public class Assignment {
         this.description = description;
         this.complete = complete;
         this.expanded = expanded;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public String getCourseName() {
