@@ -135,6 +135,26 @@ public class AssignmentRepo {
         return true;
     }
 
+    public void completeAssignment(final Assignment assignment, final Context context,
+                                   Boolean isChecked) {
+
+        assignmentRef.document(assignment.getDate() + assignment.getTime())
+                .update("complete", isChecked).addOnSuccessListener(
+                        new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context,  assignment.getAssignmentName() + " completed!" , Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: " + e.toString() );
+            }
+        });
+
+    }
+
 
 }
 
