@@ -53,4 +53,8 @@ public class AssignmentsViewModel extends ViewModel {
         return mAssignmentList;
     }
 
+    public void delAssignment(Assignment assignmentToDel, Context context){
+        aRepo.delAssignment(assignmentToDel, context);
+    }
+
 }
