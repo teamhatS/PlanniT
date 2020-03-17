@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,7 +31,8 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
     private Context mContext;
     private AssignmentsViewModel assignmentsViewModel;
 
-    public AssignmentsAdapter(Context mContext, List<Assignment> assignmentsArrayList, AssignmentsViewModel assignmentsViewModel) {
+    public AssignmentsAdapter(Context mContext, List<Assignment> assignmentsArrayList,
+                              AssignmentsViewModel assignmentsViewModel) {
         this.assignmentsArrayList = assignmentsArrayList;
         this.mContext = mContext;
         this.assignmentsViewModel = assignmentsViewModel;
@@ -39,7 +41,8 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem_assignments, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.layout_listitem_assignments, parent, false);
          ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -56,13 +59,16 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
 
                             @Override
                             public boolean onLongClick(View v) {
-                                final Assignment assignmentToDelete = assignmentsArrayList.get(position);
+                                final Assignment assignmentToDelete =
+                                        assignmentsArrayList.get(position);
                                 final Dialog delDialog = new Dialog(mContext);
                                 delDialog.setContentView(R.layout.fragment_delete_dialog);
                                 Button yesButton = delDialog.findViewById(R.id.btn_deldialog_yes);
                                 Button noButton = delDialog.findViewById(R.id.btn_deldialog_no);
-                                TextView exitTextview = delDialog.findViewById(R.id.tv_deldialog_exit);
-                                TextView questionTextView = delDialog.findViewById(R.id.tv_deldialog_question);
+                                TextView exitTextview =
+                                        delDialog.findViewById(R.id.tv_deldialog_exit);
+                                TextView questionTextView =
+                                        delDialog.findViewById(R.id.tv_deldialog_question);
                                 String question = "Do you want to delete "
                                         + assignmentToDelete.getAssignmentName() + "?";
                                 questionTextView.setText(question);
@@ -72,7 +78,8 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
                                         assignmentsViewModel.delAssignment(
                                                 assignmentToDelete, mContext);
                                         assignmentsArrayList.remove(position);
-                                        assignmentsViewModel.getmAssignmentList().setValue(assignmentsArrayList);
+                                        assignmentsViewModel.getmAssignmentList()
+                                                .setValue(assignmentsArrayList);
                                         delDialog.dismiss();
                                     }
                                 });
@@ -96,6 +103,16 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
                                 return false;
                             }
                         });
+        ((ViewHolder)holder).checkboxAssignmentComplete
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    assignmentsViewModel.completeAssignment(assignmentsArrayList
+                            .get(position), mContext, isChecked);
+
+            }
+
+        });
 
     }
 
@@ -132,7 +149,8 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
             textViewAssignmentName .setText(assignmentsArrayList.get(position).getAssignmentName());
             textViewAssignmentDate.setText(assignmentsArrayList.get(position).getDate());
             textViewAssignmentTime.setText(assignmentsArrayList.get(position).getTime());
-            textViewAssignmentDescription.setText(assignmentsArrayList.get(position).getDescription());
+            textViewAssignmentDescription.setText(assignmentsArrayList.get(position)
+                    .getDescription());
             checkboxAssignmentComplete.setChecked(assignmentsArrayList.get(position).getComplete());
             assignmentDescription = itemView.findViewById(R.id.assignment_description);
         }
