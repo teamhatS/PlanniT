@@ -1,14 +1,14 @@
 package com.hats.plannit.ui.assignments;
+/**
+ * @authot: Howard Chen
+ */
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.hats.plannit.models.Assignment;
 import com.hats.plannit.repos.AssignmentRepo;
-
 import java.util.List;
 
 public class AssignmentsViewModel extends ViewModel {
