@@ -56,6 +56,7 @@ public class AssignmentRepo {
     private void collectionListener( ){
         //TODO: need to order by closest to due date.
         // possibly add a feature to flag overdue assignments in red font
+        //Bug with duplicates when adding more assignments
         assignmentRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -70,12 +71,12 @@ public class AssignmentRepo {
 
                         if(!queryDocumentSnapshots.isEmpty()){
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            dataSet.clear();
                             for(DocumentSnapshot documentSnapshot : list){
-                                if(!dataSet.contains(documentSnapshot.toObject(Assignment.class))) {
                                     Assignment newAssignment = documentSnapshot.toObject(Assignment.class);
-                                    newAssignment.setDocumentId(documentSnapshot.getId()); //sets document Id for javaside
+//                                    newAssignment.setDocumentId(documentSnapshot.getId()); //sets document Id for javaside
                                     dataSet.add(documentSnapshot.toObject(Assignment.class));
-                                }
+
                             }
                         }
 
@@ -95,7 +96,7 @@ public class AssignmentRepo {
     public boolean addAssignment(final Assignment newAssignment, final Context context){
 
         //does not handle duplicates yet
-        assignmentRef.document().set(newAssignment)
+        assignmentRef.document(newAssignment.getDate() + newAssignment.getTime()).set(newAssignment)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -108,6 +109,29 @@ public class AssignmentRepo {
                 Log.e(TAG, "onFailure: "+ e.toString() );
             }
         });
+        return true;
+    }
+
+    public boolean delAssignment(final Assignment assignmentToDel, final Context context){
+
+        //does not handle duplicates yet
+        Log.d(TAG, "delAssignment: " + assignmentToDel.getDocumentId());
+        assignmentRef.document(assignmentToDel.getDate()+ assignmentToDel.getTime()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, assignmentToDel.getAssignmentName() +" deleted.",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: " + e.toString() );
+
+            }
+        });
+
         return true;
     }
 
