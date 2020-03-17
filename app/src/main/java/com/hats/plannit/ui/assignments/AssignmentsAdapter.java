@@ -1,4 +1,4 @@
-package com.hats.plannit.ui.home;
+package com.hats.plannit.ui.assignments;
 
 
 /*
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,15 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
+public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.ViewHolder>{
     private static final String TAG = "HomeAdapter";
     private List<Assignment> assignmentsArrayList;
     private Context mContext;
 
-    public HomeAdapter(Context mContext, List<Assignment> assignmentsArrayList) {
+    public AssignmentsAdapter(Context mContext, List<Assignment> assignmentsArrayList) {
         this.assignmentsArrayList = assignmentsArrayList;
         this.mContext = mContext;
     }

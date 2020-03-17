@@ -182,7 +182,7 @@ public class AvailableCourseRepo
                                 if(!courseList.contains(documentSnapshot.toObject(Course.class)))
                                 {
                                     Course newCourse = documentSnapshot.toObject(Course.class);
-                                    newCourse.setCourseId(documentSnapshot.getId());
+                                    newCourse.setDocumentID(documentSnapshot.getId());
                                     courseList.add(documentSnapshot.toObject(Course.class));
                                 }
                             }
