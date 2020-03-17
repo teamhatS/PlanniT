@@ -1,10 +1,14 @@
 package com.hats.plannit.ui.courses;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,9 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
-import com.hats.plannit.models.Subject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -26,11 +28,13 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
     private static final String TAG = "CoursesAdapter";
     private List<Course> courseArrayList;
     private Context mContext;
+    private OnItemClicked onItemClicked;
 
-    public CoursesAdapter(Context mContext, List<Course> courseArrayList)
+    public CoursesAdapter(Context mContext, List<Course> courseArrayList, OnItemClicked onItemClicked)
     {
         this.courseArrayList = courseArrayList;
         this.mContext = mContext;
+        this.onItemClicked = onItemClicked;
     }
 
     @NonNull
@@ -58,22 +62,59 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         return courseArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener
+    {
         TextView textViewCourseName;
         TextView textViewCourseTitle;
         TextView textViewCourseTime;
         TextView textViewCourseLocation;
         LinearLayout parentLayout;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView)
+        {
             super(itemView);
             textViewCourseName = itemView.findViewById(R.id.tv_course_number);
             textViewCourseTitle = itemView.findViewById(R.id.tv_course_title);
             textViewCourseTime = itemView.findViewById(R.id.tv_course_schedule);
             textViewCourseLocation = itemView.findViewById(R.id.tv_course_location);
             parentLayout = itemView.findViewById(R.id.parent_layout_courses);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public boolean onLongClick(View view)
+        {
+            final Dialog dialog = new Dialog(mContext, android.R.style.Theme_Translucent_NoTitleBar);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(true);
+            dialog.setContentView(R.layout.remove_course_view);
+
+            Button no_button = dialog.findViewById(R.id.no_button);
+            Button yes_button = dialog.findViewById(R.id.yes_button);
+            TextView remove_course = dialog.findViewById(R.id.remove_course);
+            remove_course.setText("Are you sure you wan to remove " + courseArrayList.get(getLayoutPosition()).getName() + "?");
+
+            yes_button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    onItemClicked.onItemDelete(getLayoutPosition());
+                    dialog.dismiss();
+                }
+            });
+
+            no_button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+            return false;
         }
     }
 }

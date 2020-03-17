@@ -23,7 +23,7 @@ import java.util.List;
  * author: Howard chen
  */
 
-public class CoursesFragment extends Fragment
+public class CoursesFragment extends Fragment implements OnItemClicked
 {
     private CoursesAdapter coursesAdapter;
 
@@ -70,9 +70,17 @@ public class CoursesFragment extends Fragment
 
     public void initRecyclerViews()
     {
-        coursesAdapter = new CoursesAdapter(getActivity(), CourseAsset.registeredCourseList);
+        coursesAdapter = new CoursesAdapter(getActivity(), CourseAsset.registeredCourseList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         customersRecyclerView.setLayoutManager(layoutManager);
         customersRecyclerView.setAdapter(coursesAdapter);
+    }
+
+    @Override
+    public void onItemDelete(int position)
+    {
+        CourseAsset.courseViewModel.remove(position, getContext());
+        //CourseAsset.registeredCourseList.remove(position);
+        //coursesAdapter.notifyItemRemoved(position);
     }
 }

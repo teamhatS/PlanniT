@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
 import com.hats.plannit.models.Subject;
+import com.hats.plannit.repos.AvailableCourseRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +111,13 @@ public class CoursesViewModel extends ViewModel
         }
 
         return duplicateCourses;
+    }
+
+
+    public void remove(int position, Context context)
+    {
+        CourseAsset.registeredCourseList.remove(position);
+        availableCourseRepo.addRegisteredCourse(CourseAsset.registeredCourseList, context);
     }
 
     public void addAllAvailableSubjects(Context context)
