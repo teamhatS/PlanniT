@@ -57,4 +57,8 @@ public class AssignmentsViewModel extends ViewModel {
         aRepo.delAssignment(assignmentToDel, context);
     }
 
+    public void completeAssignment(Assignment assignment, Context context, Boolean isChecked){
+        aRepo.completeAssignment(assignment, context, isChecked);
+    }
+
 }
