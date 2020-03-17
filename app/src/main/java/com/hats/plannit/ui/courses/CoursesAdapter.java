@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -92,7 +91,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
             Button no_button = dialog.findViewById(R.id.no_button);
             Button yes_button = dialog.findViewById(R.id.yes_button);
             TextView remove_course = dialog.findViewById(R.id.remove_course);
-            remove_course.setText("Are you sure you wan to remove " + courseArrayList.get(getLayoutPosition()).getName() + "?");
+            remove_course.setText("Are you sure you want to remove " + courseArrayList.get(getLayoutPosition()).getName() + "?");
 
             yes_button.setOnClickListener(new View.OnClickListener()
             {

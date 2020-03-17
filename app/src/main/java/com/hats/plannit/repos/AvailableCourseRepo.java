@@ -30,7 +30,7 @@ public class AvailableCourseRepo
     private List<Course> registeredCourseList = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference availableSubjectRef = db.collection("AvailableSubject");
-    private final CollectionReference registeredCourseRef = db.collection("RegisteredCourse");
+    private final CollectionReference registeredCourseRef = db.collection("Student").document("123456").collection("RegisteredCourse");
 
     public static AvailableCourseRepo getInstance()
     {
@@ -63,6 +63,11 @@ public class AvailableCourseRepo
         data.setValue(registeredCourseList);
 
         return data;
+    }
+
+    public void removeRegisteredCourse(Course course)
+    {
+        removeCourse(registeredCourseRef, course);
     }
 
     public void addAvailableSubjects(final List<Subject> newSubjectList, final Context context)
@@ -148,9 +153,6 @@ public class AvailableCourseRepo
                                 if(!courseList.contains(documentSnapshot.toObject(Course.class)))
                                 {
                                     Course newCourse = documentSnapshot.toObject(Course.class);
-                                    newCourse.setCourseId(documentSnapshot.getId());
-                                    System.out.println(newCourse.getCourseId());
-                                    newCourse.setDocumentID(documentSnapshot.getId());
                                     courseList.add(documentSnapshot.toObject(Course.class));
                                 }
                             }
@@ -197,7 +199,7 @@ public class AvailableCourseRepo
     {
         for(Course course: newCourseList)
         {
-            reference.document().set(course).addOnSuccessListener(new OnSuccessListener<Void>()
+            reference.document(String.valueOf(course.getCourseNumber())).set(course).addOnSuccessListener(new OnSuccessListener<Void>()
             {
                 @Override
                 public void onSuccess(Void aVoid)
@@ -214,6 +216,26 @@ public class AvailableCourseRepo
                 }
             });
         }
+        return true;
+    }
+
+    private boolean removeCourse(final CollectionReference reference, final Course course)
+    {
+        reference.document(String.valueOf(course.getCourseNumber())).delete().addOnSuccessListener(new OnSuccessListener<Void>()
+        {
+            @Override
+            public void onSuccess(Void aVoid)
+            {
+                Log.e(TAG, "Course is removed");
+            }
+        }).addOnFailureListener(new OnFailureListener()
+        {
+            @Override
+            public void onFailure(@NonNull Exception e)
+            {
+                Log.e(TAG, "onFailure: " + e.toString());
+            }
+        });
         return true;
     }
 }

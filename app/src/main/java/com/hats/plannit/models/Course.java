@@ -2,9 +2,8 @@ package com.hats.plannit.models;
 
 import com.google.firebase.firestore.Exclude;
 
-public class Course {
-
-    private String documentID;
+public class Course
+{
     private String name;
     private String time;
     private String location;
@@ -20,15 +19,6 @@ public class Course {
         this.time = time;
         this.location = location;
         this.courseNumber = courseNumber;
-    }
-
-    @Exclude
-    public String getDocumentID() {
-        return documentID;
-    }
-
-    public void setDocumentID(String documentID) {
-        this.documentID = documentID;
     }
 
     public String getName() {

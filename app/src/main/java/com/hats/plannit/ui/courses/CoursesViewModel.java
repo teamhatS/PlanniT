@@ -114,10 +114,10 @@ public class CoursesViewModel extends ViewModel
     }
 
 
-    public void remove(int position, Context context)
+    public void remove(int position)
     {
+        availableCourseRepo.removeRegisteredCourse(CourseAsset.registeredCourseList.get(position));
         CourseAsset.registeredCourseList.remove(position);
-        availableCourseRepo.addRegisteredCourse(CourseAsset.registeredCourseList, context);
     }
 
     public void addAllAvailableSubjects(Context context)

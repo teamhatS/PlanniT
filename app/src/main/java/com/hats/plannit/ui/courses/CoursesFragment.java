@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
-import com.hats.plannit.models.Subject;
 
 import java.util.List;
 
@@ -79,8 +78,7 @@ public class CoursesFragment extends Fragment implements OnItemClicked
     @Override
     public void onItemDelete(int position)
     {
-        CourseAsset.courseViewModel.remove(position, getContext());
-        //CourseAsset.registeredCourseList.remove(position);
-        //coursesAdapter.notifyItemRemoved(position);
+        CourseAsset.courseViewModel.remove(position);
+        coursesAdapter.notifyItemRemoved(position);
     }
 }
