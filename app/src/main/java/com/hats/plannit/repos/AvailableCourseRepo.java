@@ -150,6 +150,7 @@ public class AvailableCourseRepo
                                     Course newCourse = documentSnapshot.toObject(Course.class);
                                     newCourse.setCourseId(documentSnapshot.getId());
                                     System.out.println(newCourse.getCourseId());
+                                    newCourse.setDocumentID(documentSnapshot.getId());
                                     courseList.add(documentSnapshot.toObject(Course.class));
                                 }
                             }

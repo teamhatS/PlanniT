@@ -14,6 +14,7 @@ import com.hats.plannit.ui.signup.SignUpView;
 
 public class LoginView extends AppCompatActivity
 {
+
     private TextView sign_up_text;
     private Button login_button;
     private CalendarView c;
