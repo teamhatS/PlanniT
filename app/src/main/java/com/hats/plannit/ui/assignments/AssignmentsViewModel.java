@@ -3,15 +3,26 @@ package com.hats.plannit.ui.assignments;
  * @authot: Howard Chen
  */
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.hats.plannit.models.Assignment;
+import com.hats.plannit.notifications.AlertReceiver;
 import com.hats.plannit.repos.AssignmentRepo;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class AssignmentsViewModel extends ViewModel {
 
@@ -63,4 +74,46 @@ public class AssignmentsViewModel extends ViewModel {
         aRepo.completeAssignment(assignment, context, isChecked);
     }
 
+    public void setReminder(final Context context, final String email, final Assignment newAssignment)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try {
+                    Intent intent = new Intent(context, AlertReceiver.class);
+                    intent.putExtra("receiver", email);
+                    intent.putExtra("course", newAssignment.getCourseName());
+                    intent.putExtra("assignment", newAssignment.getAssignmentName());
+                    intent.putExtra("date", newAssignment.getDate());
+                    intent.putExtra("time", newAssignment.getTime());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)System.currentTimeMillis(), intent, 0);
+                    AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+                    String dateAndTime = newAssignment.getDate() + " " + newAssignment.getTime() + ":00";
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
+                    Date date = simpleDateFormat.parse(dateAndTime);
+
+                    long dateAndTimeInMillis = date.getTime();
+                    long currentTimeInMillis = System.currentTimeMillis();
+                    long oneDayInMillis = 86400000;
+                    long oneHourInMillis = 3600000;
+
+                    if(dateAndTimeInMillis - currentTimeInMillis > oneDayInMillis)
+                    {
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - oneDayInMillis, pendingIntent);
+                    }
+                    else if(dateAndTimeInMillis - currentTimeInMillis > oneHourInMillis)
+                    {
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - oneHourInMillis, pendingIntent);
+                    }
+                }
+                catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 }

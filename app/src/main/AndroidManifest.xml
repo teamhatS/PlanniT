@@ -35,6 +35,13 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme">
         </activity>
+
+        <receiver
+            android:name=".notifications.AlertReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+
     </application>
 
 </manifest>
