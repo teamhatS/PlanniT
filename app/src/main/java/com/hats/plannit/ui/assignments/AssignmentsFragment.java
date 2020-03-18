@@ -109,8 +109,8 @@ public class AssignmentsFragment extends Fragment {
         onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Log.d(TAG, "onDateSet: " + year + ".");
-                date = year + "." + month + "." + dayOfMonth;
+                Log.d(TAG, "onDateSet: " + year + "/");
+                date = year + "/" + month + "/" + dayOfMonth;
                 dueDateTextView.setText(date);
             }
         };
