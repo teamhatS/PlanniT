@@ -69,7 +69,6 @@ public class AssignmentsFragment extends Fragment {
                     @Override
                     public void onChanged(List<Assignment> assignments) {
                         assignmentsAdapter.notifyDataSetChanged();
-
                     }
         });
 
@@ -110,8 +109,8 @@ public class AssignmentsFragment extends Fragment {
         onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Log.d(TAG, "onDateSet: " + year + "/");
-                date = year + "/" + month + "/" + dayOfMonth;
+                Log.d(TAG, "onDateSet: " + year + ".");
+                date = year + "." + month + "." + dayOfMonth;
                 dueDateTextView.setText(date);
             }
         };
@@ -195,7 +194,7 @@ public class AssignmentsFragment extends Fragment {
 
     private void initRecyclerViews(){
         //Assignments
-        assignmentsAdapter = new AssignmentsAdapter(getActivity(), assignmentsViewModel.getmAssignmentList().getValue());
+        assignmentsAdapter = new AssignmentsAdapter(getActivity(), assignmentsViewModel.getmAssignmentList().getValue(), assignmentsViewModel);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         homeRecyclerView.setLayoutManager(layoutManager);
         homeRecyclerView.setAdapter(assignmentsAdapter);

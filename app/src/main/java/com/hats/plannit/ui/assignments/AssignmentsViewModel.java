@@ -1,14 +1,14 @@
 package com.hats.plannit.ui.assignments;
+/**
+ * @authot: Howard Chen
+ */
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.hats.plannit.models.Assignment;
 import com.hats.plannit.repos.AssignmentRepo;
-
 import java.util.List;
 
 public class AssignmentsViewModel extends ViewModel {
@@ -51,6 +51,14 @@ public class AssignmentsViewModel extends ViewModel {
     }
     public MutableLiveData<List<Assignment>> getmAssignmentList() {
         return mAssignmentList;
+    }
+
+    public void delAssignment(Assignment assignmentToDel, Context context){
+        aRepo.delAssignment(assignmentToDel, context);
+    }
+
+    public void completeAssignment(Assignment assignment, Context context, Boolean isChecked){
+        aRepo.completeAssignment(assignment, context, isChecked);
     }
 
 }
