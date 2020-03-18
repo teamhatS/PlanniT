@@ -73,9 +73,11 @@ public class AssignmentRepo {
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             dataSet.clear();
                             for(DocumentSnapshot documentSnapshot : list){
+                                if(!dataSet.contains(documentSnapshot.toObject(Assignment.class))) {
                                     Assignment newAssignment = documentSnapshot.toObject(Assignment.class);
-//                                    newAssignment.setDocumentId(documentSnapshot.getId()); //sets document Id for javaside
-                                    dataSet.add(documentSnapshot.toObject(Assignment.class));
+                                    newAssignment.setDocumentId(documentSnapshot.getId()); //sets document Id for javaside
+                                    dataSet.add(newAssignment);
+                                }
 
                             }
                         }
@@ -96,7 +98,7 @@ public class AssignmentRepo {
     public boolean addAssignment(final Assignment newAssignment, final Context context){
 
         //does not handle duplicates yet
-        assignmentRef.document(newAssignment.getDate() + newAssignment.getTime()).set(newAssignment)
+        assignmentRef.document().set(newAssignment)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -116,7 +118,7 @@ public class AssignmentRepo {
 
         //does not handle duplicates yet
         Log.d(TAG, "delAssignment: " + assignmentToDel.getDocumentId());
-        assignmentRef.document(assignmentToDel.getDate()+ assignmentToDel.getTime()).delete()
+        assignmentRef.document(assignmentToDel.getDocumentId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
