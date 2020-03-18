@@ -15,16 +15,6 @@ public class Assignment {
 
     public Assignment(){}
 
-    @Exclude
-    public String getDocumentId() {
-        return documentId;
-    }
-
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
-    }
-    //TODO make constructor with studentID
-
     public Assignment(String courseName, String assignmentName, String date, String time, String description) {
         this.courseName = courseName;
         this.assignmentName = assignmentName;
@@ -50,6 +40,15 @@ public class Assignment {
         this.description = description;
         this.complete = complete;
         this.expanded = expanded;
+    }
+
+    @Exclude
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
     public String getStudentID() {
