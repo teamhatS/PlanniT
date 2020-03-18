@@ -3,6 +3,7 @@ package com.hats.plannit.models;
 import com.google.firebase.firestore.Exclude;
 
 public class Assignment {
+
     private String documentId;
     private String courseName;
     private String assignmentName;
