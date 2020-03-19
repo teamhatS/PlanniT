@@ -73,6 +73,7 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.hats.plannit.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -96,8 +97,16 @@ public class CalendarFragment extends Fragment
         monthly_calendar_view = root.findViewById(R.id.monthly_calendar_view);
         monthly_calendar_view.setUseThreeLetterAbbreviation(true);
 
-        Event ev1 = new Event(Color.GREEN, 1583693577L);
-        monthly_calendar_view.addEvent(ev1);
+        String date = "2020/3/19";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/dd");
+        try {
+            Date date1 = sdf.parse(date);
+            monthly_calendar_view.addEvent(new Event(Color.GREEN, date1.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //Event ev1 = new Event(Color.GREEN, 1583693577L);
+        //monthly_calendar_view.addEvent(Color.GREEN, datw);
 
         monthly_calendar_view.setListener(new CompactCalendarView.CompactCalendarViewListener()
         {
