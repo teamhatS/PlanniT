@@ -110,7 +110,7 @@ public class AssignmentsFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 Log.d(TAG, "onDateSet: " + year + "/");
-                date = year + "/" + month + "/" + dayOfMonth;
+                date = year + "/" +(month + 1) + "/" + dayOfMonth;
                 dueDateTextView.setText(date);
             }
         };
@@ -141,6 +141,9 @@ public class AssignmentsFragment extends Fragment {
                 Assignment newAssignment = new Assignment(courseName, assignmentName,
                                                             date, time, description,
                                                             false, false );
+
+                //hardcoded email for now
+                assignmentsViewModel.setReminder(getContext(), "Plannit2020@gmail.com", newAssignment);
                 boolean added = assignmentsViewModel.addAssignment(newAssignment, getContext());
                 if(added){
                     clearFields();
@@ -151,9 +154,11 @@ public class AssignmentsFragment extends Fragment {
 
         myDialog.show(); //could move to the top above listeners.
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 myDialog.dismiss();
             }
         });
@@ -200,5 +205,4 @@ public class AssignmentsFragment extends Fragment {
         homeRecyclerView.setAdapter(assignmentsAdapter);
 
     }
-
 }
