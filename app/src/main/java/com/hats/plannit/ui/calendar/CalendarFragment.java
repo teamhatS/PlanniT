@@ -68,22 +68,31 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.hats.plannit.R;
+import com.hats.plannit.models.Assignment;
+import com.hats.plannit.ui.assignments.AssignmentsAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class CalendarFragment extends Fragment
 {
-    private CompactCalendarView monthly_calendar_view;
+    private CompactCalendarView monthlyCalendarView;
     private SimpleDateFormat simpleDateFormat;
-
     private TextView monthYear;
+    private RecyclerView assignmentRecyclerView;
+
+    private Map<Long, ArrayList<Assignment>> assignments;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -94,26 +103,24 @@ public class CalendarFragment extends Fragment
         monthYear = root.findViewById(R.id.month_year);
         monthYear.setText(simpleDateFormat.format(new Date()));
 
-        monthly_calendar_view = root.findViewById(R.id.monthly_calendar_view);
-        monthly_calendar_view.setUseThreeLetterAbbreviation(true);
+        monthlyCalendarView = root.findViewById(R.id.monthly_calendar_view);
+        monthlyCalendarView.setUseThreeLetterAbbreviation(true);
 
-        String date = "2020/3/19";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/dd");
-        try {
-            Date date1 = sdf.parse(date);
-            monthly_calendar_view.addEvent(new Event(Color.GREEN, date1.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //Event ev1 = new Event(Color.GREEN, 1583693577L);
-        //monthly_calendar_view.addEvent(Color.GREEN, datw);
+        assignmentRecyclerView = root.findViewById(R.id.assignment_recycler_view);
 
-        monthly_calendar_view.setListener(new CompactCalendarView.CompactCalendarViewListener()
+        assignments = new HashMap<>();
+
+        showDueDate();
+
+        monthlyCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener()
         {
             @Override
             public void onDayClick(Date dateClicked)
             {
-                monthly_calendar_view.addEvent(new Event(Color.GREEN, dateClicked.getTime()));
+                CalendarRecyclerViewAdapter calendarRecyclerViewAdapter = new CalendarRecyclerViewAdapter(assignments.get(dateClicked.getTime()));
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                assignmentRecyclerView.setLayoutManager(layoutManager);
+                assignmentRecyclerView.setAdapter(calendarRecyclerViewAdapter);
             }
 
             @Override
@@ -123,5 +130,31 @@ public class CalendarFragment extends Fragment
             }
         });
         return root;
+    }
+
+    private void showDueDate()
+    {
+        try
+        {
+            for(final Assignment assignment: AssignmentsAdapter.getAssignmentsArrayList())
+            {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd");
+                Date date = simpleDateFormat.parse(assignment.getDate());
+                monthlyCalendarView.addEvent(new Event(Color.GREEN, date.getTime()));
+
+                if(assignments.containsKey(date.getTime()))
+                {
+                    assignments.get(date.getTime()).add(assignment);
+                }
+                else
+                {
+                    assignments.put(date.getTime(), new ArrayList<Assignment>(){{add(assignment);}});
+                }
+            }
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

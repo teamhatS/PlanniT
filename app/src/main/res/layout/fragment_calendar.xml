@@ -37,14 +37,11 @@
         app:compactCalendarMultiEventIndicatorColor="#fff">
     </com.github.sundeepk.compactcalendarview.CompactCalendarView>
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="50sp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/assignment_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:textColor="@color/black">
-    </TextView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
