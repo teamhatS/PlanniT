@@ -26,12 +26,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
-import com.hats.plannit.notifications.AlertReceiver;
 
 import java.util.Calendar;
 import java.util.List;
-
-import static android.content.Context.ALARM_SERVICE;
 
 /*
 @author- Howard Chen
