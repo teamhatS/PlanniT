@@ -59,15 +59,21 @@
 
 package com.hats.plannit.ui.calendar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,6 +88,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -97,6 +104,8 @@ public class CalendarFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        setHasOptionsMenu(true);
 
         simpleDateFormat = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
 
@@ -156,5 +165,37 @@ public class CalendarFragment extends Fragment
         {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater)
+    {
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.calendar_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        switch(id)
+        {
+            case R.id.day_view:
+            {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.nav_host_fragment, new WeekDayCalendarFragment(1));
+                fr.commit();
+                return true;
+            }
+            case R.id.week_view:
+            {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.nav_host_fragment, new WeekDayCalendarFragment(2));
+                fr.commit();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
