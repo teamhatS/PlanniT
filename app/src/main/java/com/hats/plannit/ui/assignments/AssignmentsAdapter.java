@@ -27,7 +27,7 @@ import java.util.List;
 
 public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.ViewHolder>{
     private static final String TAG = "HomeAdapter";
-    private List<Assignment> assignmentsArrayList;
+    private static List<Assignment> assignmentsArrayList;
     private Context mContext;
     private AssignmentsViewModel assignmentsViewModel;
 
@@ -113,12 +113,16 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
             }
 
         });
-
     }
 
     @Override
     public int getItemCount() {
         return assignmentsArrayList.size();
+    }
+
+    public static List<Assignment> getAssignmentsArrayList()
+    {
+        return assignmentsArrayList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -154,7 +158,6 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
             checkboxAssignmentComplete.setChecked(assignmentsArrayList.get(position).getComplete());
             assignmentDescription = itemView.findViewById(R.id.assignment_description);
         }
-
     }
 }
 
