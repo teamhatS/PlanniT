@@ -23,6 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.ViewHolder>{
@@ -148,7 +152,8 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
             assignmentDescription = itemView.findViewById(R.id.assignment_description);
         }
 
-        public void bindView(int position){
+        public void bindView(int position)
+        {
             textViewCourseName .setText(assignmentsArrayList.get(position).getCourseName());
             textViewAssignmentName .setText(assignmentsArrayList.get(position).getAssignmentName());
             textViewAssignmentDate.setText(assignmentsArrayList.get(position).getDate());
@@ -157,6 +162,37 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
                     .getDescription());
             checkboxAssignmentComplete.setChecked(assignmentsArrayList.get(position).getComplete());
             assignmentDescription = itemView.findViewById(R.id.assignment_description);
+
+            showOverDueAssignment(position);
+        }
+
+        private void showOverDueAssignment(int position)
+        {
+            try
+            {
+                if(assignmentsArrayList.get(position).getComplete())
+                {
+                    parentLayout.setBackgroundColor(parentLayout.getResources().getColor(R.color.lawn_green));
+                }
+                else
+                {
+                    String dateAndTime = assignmentsArrayList.get(position).getDate() + " " + assignmentsArrayList.get(position).getTime();
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd hh:mm");
+
+                    Date dueDate = simpleDateFormat.parse(dateAndTime);
+                    Date currentDate = new Date();
+
+                    if(currentDate.getTime() >= dueDate.getTime())
+                    {
+                        parentLayout.setBackgroundColor(parentLayout.getResources().getColor(R.color.red));
+                    }
+                }
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }
