@@ -67,6 +67,7 @@ public class LoginView extends AppCompatActivity
                 String email = nEmail.getText().toString();
                 String password = nPassword.getText().toString();
                 if(!email.equals("") && !password.equals("")){
+                    //TODO: need to check if email and password are in auth
                     mAuth.signInWithEmailAndPassword(email, password);
                     Intent intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);
