@@ -21,6 +21,8 @@ import com.hats.plannit.ui.signup.SignUpView;
 
 public class LoginView extends AppCompatActivity
 {
+    //private static final String TAG = "LoginView";
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -49,9 +51,11 @@ public class LoginView extends AppCompatActivity
                 // Login
                 if(user != null){
                     // User is signed in
+                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     //toastMessage("Successfully signed in with " + user.getEmail());
                 } else{
                     // User is signed out
+                    //Log.d(TAG, "onAuthStateChanged:signed_out:");
                     //toastMessage("Successfully signed out.");
                 }
             }
