@@ -98,6 +98,8 @@ public class AssignmentsViewModel extends ViewModel {
                     long oneDayInMillis = 86400000;
                     long oneHourInMillis = 3600000;
 
+                    System.out.println(dateAndTimeInMillis - currentTimeInMillis);
+
                     if(dateAndTimeInMillis - currentTimeInMillis > oneDayInMillis)
                     {
                         alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - oneDayInMillis, pendingIntent);
