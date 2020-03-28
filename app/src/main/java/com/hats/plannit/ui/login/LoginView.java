@@ -49,10 +49,10 @@ public class LoginView extends AppCompatActivity
                 // Login
                 if(user != null){
                     // User is signed in
-                    toastMessage("Successfully signed in with " + user.getEmail());
+                    //toastMessage("Successfully signed in with " + user.getEmail());
                 } else{
                     // User is signed out
-                    toastMessage("Successfully signed out.");
+                    //toastMessage("Successfully signed out.");
                 }
             }
         };
@@ -66,6 +66,7 @@ public class LoginView extends AppCompatActivity
                     mAuth.signInWithEmailAndPassword(email, password);
                     Intent intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);
+                    toastMessage("Successfully signed in.");
                 }else{
                     toastMessage("You didn't fill in all the fields.");
                 }
