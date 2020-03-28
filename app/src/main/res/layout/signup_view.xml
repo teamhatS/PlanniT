@@ -27,7 +27,7 @@
 
     <View
         android:layout_width="310dp"
-        android:layout_height="4dp"
+        android:layout_height="8dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:background="@color/white" />
@@ -193,7 +193,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="@drawable/white_thistle_super_rounded_rectangle_background"
+        android:background="@drawable/thistle_super_rounded_rectangle_background"
         android:fontFamily="@font/segoe_ui"
         android:text="@string/create"
         android:textAllCaps="false"
