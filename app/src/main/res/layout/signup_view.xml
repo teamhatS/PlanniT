@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/grey">
 
-    <TextView
+    <Button
         android:id="@+id/return_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:background="@drawable/close_button" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:background="@color/white" />
 
     <EditText
-        android:id="@+id/username_edit_text"
+        android:id="@+id/studentID_edit_text_signup"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -64,7 +64,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/password_edit_text"
+        android:id="@+id/password_edit_text_signup"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -95,7 +95,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/confirm_password_edit_text"
+        android:id="@+id/confirm_password_edit_text_signup"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -126,7 +126,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/email_edit_text"
+        android:id="@+id/email_edit_text_signup"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -157,7 +157,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/name_edit_text"
+        android:id="@+id/username_edit_text_signup"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

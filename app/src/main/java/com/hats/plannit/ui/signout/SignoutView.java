@@ -36,10 +36,10 @@ public class SignoutView extends AppCompatActivity {
                 // Login
                 if(user != null){
                     // User is signed in
-                    toastMessage("Successfully signed in with " + user.getEmail());
+                    //toastMessage("Successfully signed in with " + user.getEmail());
                 } else{
                     // User is signed out
-                    toastMessage("Successfully signed out.");
+                    //toastMessage("Successfully signed out.");
                 }
             }
         };

@@ -13,18 +13,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hats.plannit.MainActivity;
 import com.hats.plannit.R;
 import com.hats.plannit.ui.signup.SignUpView;
 
 public class LoginView extends AppCompatActivity
 {
-    //private static final String TAG = "LoginView";
+    private static final String TAG = "LoginView";
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    FirebaseFirestore db;
+    CollectionReference reference;
 
     private TextView sign_up_text;
 
@@ -37,13 +45,14 @@ public class LoginView extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view);
 
-        nEmail = findViewById(R.id.username_edit_text);
+        nEmail = findViewById(R.id.email_edit_text);
         nPassword = findViewById(R.id.password_edit_text);
         btnLogIn = findViewById(R.id.login_button);
 
         sign_up_text = findViewById(R.id.sign_up_text);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -51,11 +60,11 @@ public class LoginView extends AppCompatActivity
                 // Login
                 if(user != null){
                     // User is signed in
-                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     //toastMessage("Successfully signed in with " + user.getEmail());
                 } else{
                     // User is signed out
-                    //Log.d(TAG, "onAuthStateChanged:signed_out:");
+                    Log.d(TAG, "onAuthStateChanged:signed_out:");
                     //toastMessage("Successfully signed out.");
                 }
             }
@@ -64,14 +73,22 @@ public class LoginView extends AppCompatActivity
         btnLogIn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                String email = nEmail.getText().toString();
-                String password = nPassword.getText().toString();
+                String email = nEmail.getText().toString().trim();
+                String password = nPassword.getText().toString().trim();
                 if(!email.equals("") && !password.equals("")){
-                    //TODO: need to check if email and password are in auth
-                    mAuth.signInWithEmailAndPassword(email, password);
-                    Intent intent = new Intent(getApplication(), MainActivity.class);
-                    startActivity(intent);
-                    toastMessage("Successfully signed in.");
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(LoginView.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Intent intent = new Intent(getApplication(), MainActivity.class);
+                                        startActivity(intent);
+                                        toastMessage("Successfully signed in.");
+                                    } else {
+                                        toastMessage("Sign in failed.");
+                                    }
+                                }
+                            });
                 }else{
                     toastMessage("You didn't fill in all the fields.");
                 }
