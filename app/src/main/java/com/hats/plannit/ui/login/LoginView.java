@@ -75,13 +75,13 @@ public class LoginView extends AppCompatActivity
             public void onClick(View view){
                 String email = nEmail.getText().toString().trim();
                 String password = nPassword.getText().toString().trim();
-                if(!email.equals("") && !password.equals("")){
+                if(!email.equals("") && !password.equals("")){ //both fields must have something inputted
                     mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(LoginView.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(LoginView.this, new OnCompleteListener<AuthResult>() { //checks for email and password
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Intent intent = new Intent(getApplication(), MainActivity.class);
+                                        Intent intent = new Intent(getApplication(), MainActivity.class); //if successful it goes into app
                                         startActivity(intent);
                                         toastMessage("Successfully signed in.");
                                     } else {

@@ -63,7 +63,7 @@ public class SignUpView extends AppCompatActivity
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //back button
                 Intent intent = new Intent(getApplication(), LoginView.class);
                 startActivity(intent);
             }
@@ -91,10 +91,10 @@ public class SignUpView extends AppCompatActivity
             toastMessage("Password must be at least 6 characters.");
         }else if(!password.equals(confirmedPassword)){
             toastMessage("Your password doesn't match.");
-        }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){ //valid email
             toastMessage("Please enter a valid email address.");
         }else{
-            final ProgressDialog progressDialog = new ProgressDialog(this);
+            final ProgressDialog progressDialog = new ProgressDialog(this); //essential a progress bar
             progressDialog.setMessage("Registering...");
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
@@ -103,7 +103,7 @@ public class SignUpView extends AppCompatActivity
                 @Override
                 public void onSuccess(AuthResult authResult) {
                     FirebaseUser user = authResult.getUser();
-                    reference = db.collection(user.getEmail());
+                    reference = db.collection(user.getEmail()); //the unique identifier for the collection
                     Map<String, String> userData = new HashMap<>();
                     userData.put("studentId", studentId);
                     userData.put("password", password);
