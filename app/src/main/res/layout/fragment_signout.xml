@@ -27,13 +27,19 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="146dp"
+        android:layout_marginBottom="223dp"
         android:background="@drawable/thistle_super_rounded_rectangle_background"
         android:text="@string/sign_out"
         android:textAllCaps="false"
         android:textColor="@color/blue_violet"
         android:textSize="17sp"
         android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="388dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_signout"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
