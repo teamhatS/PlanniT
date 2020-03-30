@@ -7,7 +7,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -25,10 +24,12 @@ public class StudentRepo {
 
     private static final String TAG = "StudentRepo";
     private static StudentRepo instance;
-    private ArrayList<Student> dataSet = new ArrayList<>();
+    private List<Student> dataSet = new ArrayList<>();
+    private Student currentStudent; // the student logged in;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference studentRef = db.collection("Student");
 
+    //Singleton Pattern
     public static StudentRepo getInstance(){
         if(instance == null){
             instance = new StudentRepo();
@@ -36,7 +37,7 @@ public class StudentRepo {
         return instance;
     }
 
-    public MutableLiveData<List<Student>> getStudents(){
+    public  MutableLiveData<List<Student>> getStudents(){
         if(dataSet.isEmpty()) loadStudents();
         MutableLiveData<List<Student>> data = new MutableLiveData<>();
         data.setValue(dataSet);
@@ -44,32 +45,37 @@ public class StudentRepo {
     }
 
     private void loadStudents(){
+        //listens for updates on Collection in realtime
         collectionListener();
     }
 
-    private void collectionListener(){
+    private void collectionListener( ){
+
         studentRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(e != null){
-                    Log.w(TAG, "Listen Failed", e);
+                    Log.w(TAG,"Listen Failed", e );
                     return;
                 }
 
                 studentRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
                         if(!queryDocumentSnapshots.isEmpty()){
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             for(DocumentSnapshot documentSnapshot : list){
-                                if(!dataSet.contains(documentSnapshot.toObject(Student.class))){
+                                if(!dataSet.contains(documentSnapshot.toObject(Student.class))) {
                                     Student newStudent = documentSnapshot.toObject(Student.class);
-                                    newStudent.setDocumentId(documentSnapshot.getId());
-                                    dataSet.add(documentSnapshot.toObject(Student.class));
+                                    dataSet.add(newStudent);
+                                    Log.d(TAG, "onSuccess: " + dataSet);
                                 }
                             }
                         }
-                        Log.e(TAG, "onSuccess: added");
+
+                        Log.e(TAG, "onSuccess: added" );
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -81,20 +87,32 @@ public class StudentRepo {
         });
     }
 
-    public boolean addStudent(final Student newStudent, final Context context){
-        studentRef.document().set(newStudent).addOnSuccessListener(new OnSuccessListener<Void>() {
+    public Student getCurrentStudent(){
+        for(Student student : dataSet){
+            if(student.getLoggedIn()){
+                student = currentStudent; //assigns to current student..probably won't need.
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public void updateStudentAccount(final Context context, Student student){
+        studentRef.document(student.getStudentID()).set(student)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, newStudent.getStudentId() + " stored.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Student Account Updated.", Toast.LENGTH_LONG).show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onFailure: "+ e.toString() );
+                Log.e(TAG, "onFailure: " + e.toString() );
+
             }
         });
-        return true;
+
     }
 
 }

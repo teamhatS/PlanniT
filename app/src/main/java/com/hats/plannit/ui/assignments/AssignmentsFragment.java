@@ -1,4 +1,4 @@
-package com.hats.plannit.ui.home;
+package com.hats.plannit.ui.assignments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -34,14 +34,13 @@ import java.util.List;
 @author- Howard Chen
  */
 
-public class HomeFragment extends Fragment {
+public class AssignmentsFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
-    private HomeViewModel homeViewModel;
+    private AssignmentsViewModel assignmentsViewModel;
 
     private RecyclerView homeRecyclerView;
-    private HomeAdapter homeAdapter;
-
+    private AssignmentsAdapter assignmentsAdapter;
     private FloatingActionButton addAssignmentFab;
     private Button submitButton;
     private Button backButton;
@@ -60,21 +59,20 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.init();
+        assignmentsViewModel = new ViewModelProvider(this).get(AssignmentsViewModel.class);
+        assignmentsViewModel.init();
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         homeRecyclerView = root.findViewById(R.id.rv_assignment);
         final TextView textView = root.findViewById(R.id.text_home);
         addAssignmentFab = root.findViewById(R.id.fab_add_assignment);
-        homeViewModel.getmAssignmentList().observe(getViewLifecycleOwner(), new Observer<List<Assignment>>() {
+        assignmentsViewModel.getmAssignmentList().observe(getViewLifecycleOwner(), new Observer<List<Assignment>>() {
                     @Override
                     public void onChanged(List<Assignment> assignments) {
-                        homeAdapter.notifyDataSetChanged();
-
+                        assignmentsAdapter.notifyDataSetChanged();
                     }
         });
 
-                myDialog = new Dialog(getContext());
+        myDialog = new Dialog(getContext());
 
         addAssignmentFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +110,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 Log.d(TAG, "onDateSet: " + year + "/");
-                date = year + "/" + month + "/" + dayOfMonth;
+                date = year + "/" +(month + 1) + "/" + dayOfMonth;
                 dueDateTextView.setText(date);
             }
         };
@@ -143,7 +141,10 @@ public class HomeFragment extends Fragment {
                 Assignment newAssignment = new Assignment(courseName, assignmentName,
                                                             date, time, description,
                                                             false, false );
-                boolean added = homeViewModel.addAssignment(newAssignment, getContext());
+
+                //hardcoded email for now
+                assignmentsViewModel.setReminder(getContext(), "Plannit2020@gmail.com", newAssignment);
+                boolean added = assignmentsViewModel.addAssignment(newAssignment, getContext());
                 if(added){
                     clearFields();
                 }
@@ -153,9 +154,11 @@ public class HomeFragment extends Fragment {
 
         myDialog.show(); //could move to the top above listeners.
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 myDialog.dismiss();
             }
         });
@@ -196,11 +199,10 @@ public class HomeFragment extends Fragment {
 
     private void initRecyclerViews(){
         //Assignments
-        homeAdapter = new HomeAdapter(getActivity(), homeViewModel.getmAssignmentList().getValue());
+        assignmentsAdapter = new AssignmentsAdapter(getActivity(), assignmentsViewModel.getmAssignmentList().getValue(), assignmentsViewModel);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         homeRecyclerView.setLayoutManager(layoutManager);
-        homeRecyclerView.setAdapter(homeAdapter);
+        homeRecyclerView.setAdapter(assignmentsAdapter);
 
     }
-
 }

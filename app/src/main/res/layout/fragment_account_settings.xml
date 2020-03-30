@@ -9,12 +9,13 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_settings_username"
+        android:id="@+id/til_settings_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_settings_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
@@ -23,47 +24,53 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_settings_password"
+        android:id="@+id/til_settings_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
         app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_settings_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:hint="Password"
+            android:maxLength="10"
             android:inputType="textPassword">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_settings_confirm_password"
+        android:id="@+id/til_settings_confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
         app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_settings_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="10"
             android:hint="Confirm Password"
             android:inputType="textPassword">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_settings_email"
+        android:id="@+id/til_settings_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="10"
         app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_settings_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
-            android:maxLength="10"
             android:inputType="textEmailAddress">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +82,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/bt_settings_back"
+            android:id="@+id/btn_account_settings_back"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -87,7 +94,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/bt_settings_submit"
+            android:id="@+id/btn_account_settings_submit"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

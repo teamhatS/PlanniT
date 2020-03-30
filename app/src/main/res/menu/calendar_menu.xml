@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MyActivity" >
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/month_view"
+            android:title="Monthly view"
+            android:orderInCategory="100"
+            app:showAsAction="collapseActionView">
+        </item>
+
+        <item android:id="@+id/week_view"
+            android:title="Weekly view"
+            android:orderInCategory="100"
+            app:showAsAction="collapseActionView">
+        </item>
+
+        <item android:id="@+id/day_view"
+            android:title="Daily view"
+            android:orderInCategory="100"
+            app:showAsAction="collapseActionView">
+        </item>
+
+    </group>
+
+</menu>

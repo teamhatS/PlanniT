@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.hats.plannit"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 27 //targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,4 +41,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+    implementation 'com.github.alamkanak:android-week-view:1.2.6'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
 }
