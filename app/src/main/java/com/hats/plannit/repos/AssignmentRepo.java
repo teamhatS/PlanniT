@@ -65,10 +65,9 @@ public class AssignmentRepo {
                     return;
                 }
 
-                assignmentRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                assignmentRef.orderBy("date").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
                         if(!queryDocumentSnapshots.isEmpty()){
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             dataSet.clear();
