@@ -101,11 +101,13 @@ public class AssignmentsViewModel extends ViewModel {
 
                     if(dateAndTimeInMillis - currentTimeInMillis > oneDayInMillis)
                     {
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - currentTimeInMillis - oneDayInMillis, pendingIntent);
+                        long timeToTrigger = dateAndTimeInMillis - currentTimeInMillis - oneDayInMillis;
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeInMillis + timeToTrigger, pendingIntent);
                     }
                     else if(dateAndTimeInMillis - currentTimeInMillis > oneHourInMillis)
                     {
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - currentTimeInMillis - oneHourInMillis, pendingIntent);
+                        long timeToTrigger = dateAndTimeInMillis - currentTimeInMillis - oneHourInMillis;
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeInMillis + timeToTrigger, pendingIntent);
                     }
                 }
                 catch (ParseException e)
