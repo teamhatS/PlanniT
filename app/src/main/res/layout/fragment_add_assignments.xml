@@ -8,6 +8,12 @@ android:padding="16dp"
 android:background="@color/colorBackground"
 android:orientation="vertical">
 
+
+    <Spinner
+        android:id="@+id/spinner_courses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_course_name"
         android:layout_width="match_parent"
