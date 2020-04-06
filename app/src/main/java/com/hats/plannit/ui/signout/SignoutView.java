@@ -29,25 +29,26 @@ public class SignoutView extends AppCompatActivity {
         btnSignOut = findViewById(R.id.sign_out_button);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                // Login
-                if(user != null){
-                    // User is signed in
-                    //toastMessage("Successfully signed in with " + user.getEmail());
-                } else{
-                    // User is signed out
-                    //toastMessage("Successfully signed out.");
-                }
-            }
-        };
+//        mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                // Login
+//                if(user != null){
+//                    // User is signed in
+//                    //toastMessage("Successfully signed in with " + user.getEmail());
+//                } else{
+//                    // User is signed out
+//                    //toastMessage("Successfully signed out.");
+//                }
+//            }
+//        };
 
         btnSignOut.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                mAuth.signOut();
+                //mAuth.signOut();
+                FirebaseAuth.getInstance().signOut();
                 toastMessage("Signing out...");
                 Intent intent = new Intent(getApplication(), LoginView.class);
                 startActivity(intent);
@@ -58,15 +59,18 @@ public class SignoutView extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+        //mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop(){
         super.onStop();
+        FirebaseAuth.getInstance().signOut();
+        /*
         if(mAuthListener != null){
             mAuth.removeAuthStateListener(mAuthListener);
         }
+        */
     }
 
     private void toastMessage(String message){

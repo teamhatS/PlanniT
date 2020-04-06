@@ -39,7 +39,7 @@ public class SignUpView extends AppCompatActivity
     FirebaseAuth mAuth;
     FirebaseFirestore db;
 
-    CollectionReference reference;
+    DocumentReference reference;
 
     EditText userStudentId, userPassword, userConfirmedPassword, userEmail, userUsername;
     Button btnSignUp, btnBack;
@@ -103,17 +103,18 @@ public class SignUpView extends AppCompatActivity
                 @Override
                 public void onSuccess(AuthResult authResult) {
                     FirebaseUser user = authResult.getUser();
-                    reference = db.collection(user.getEmail()); //the unique identifier for the collection
+                    //reference = db.collection(user.getEmail()); //the unique identifier for the collection
+                    reference = db.collection("Student").document(user.getEmail());
                     Map<String, String> userData = new HashMap<>();
                     userData.put("studentId", studentId);
                     userData.put("password", password);
                     userData.put("username", username);
                     progressDialog.setMessage("Saving user data...");
-                    reference.add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    reference.set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
+                        public void onSuccess(Void aVoid) {
                             progressDialog.dismiss();
-                            toastMessage("User signed up successfully.");
+                            toastMessage("Student ID " + studentId + " registered.");
                             finish();
                             Intent intent = new Intent(getApplication(), MainActivity.class);
                             startActivity(intent);

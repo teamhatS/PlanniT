@@ -73,7 +73,7 @@ public class LoginView extends AppCompatActivity
         btnLogIn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                String email = nEmail.getText().toString().trim();
+                final String email = nEmail.getText().toString().trim();
                 String password = nPassword.getText().toString().trim();
                 if(!email.equals("") && !password.equals("")){ //both fields must have something inputted
                     mAuth.signInWithEmailAndPassword(email, password)
@@ -83,7 +83,7 @@ public class LoginView extends AppCompatActivity
                                     if (task.isSuccessful()) {
                                         Intent intent = new Intent(getApplication(), MainActivity.class); //if successful it goes into app
                                         startActivity(intent);
-                                        toastMessage("Successfully signed in.");
+                                        toastMessage("Signed in with " + email);
                                     } else {
                                         toastMessage("Sign in failed.");
                                     }
