@@ -79,7 +79,8 @@ public class AssignmentsViewModel extends ViewModel {
             @Override
             public void run()
             {
-                try {
+                try
+                {
                     Intent intent = new Intent(context, AlertReceiver.class);
                     intent.putExtra("receiver", email);
                     intent.putExtra("course", newAssignment.getCourseName());
@@ -90,7 +91,7 @@ public class AssignmentsViewModel extends ViewModel {
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
                     String dateAndTime = newAssignment.getDate() + " " + newAssignment.getTime() + ":00";
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd HH:mm:ss");
                     Date date = simpleDateFormat.parse(dateAndTime);
 
                     long dateAndTimeInMillis = date.getTime();
@@ -102,11 +103,13 @@ public class AssignmentsViewModel extends ViewModel {
 
                     if(dateAndTimeInMillis - currentTimeInMillis > oneDayInMillis)
                     {
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - oneDayInMillis, pendingIntent);
+                        long timeToTrigger = dateAndTimeInMillis - currentTimeInMillis - oneDayInMillis;
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeInMillis + timeToTrigger, pendingIntent);
                     }
                     else if(dateAndTimeInMillis - currentTimeInMillis > oneHourInMillis)
                     {
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - oneHourInMillis, pendingIntent);
+                        long timeToTrigger = dateAndTimeInMillis - currentTimeInMillis - oneHourInMillis;
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeInMillis + timeToTrigger, pendingIntent);
                     }
                 }
                 catch (ParseException e)
