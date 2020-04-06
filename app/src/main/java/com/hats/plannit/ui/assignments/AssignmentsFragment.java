@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class AssignmentsFragment extends Fragment {
     private String date, time;
     private TimePickerDialog.OnTimeSetListener onTimeSetListener;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
+    private Spinner spinnerRegisteredCourses;
     Dialog myDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -90,6 +92,8 @@ public class AssignmentsFragment extends Fragment {
 
         Boolean complete, expanded;
         myDialog.setContentView(R.layout.fragment_add_assignments);
+        //TODO: populate spinner with Registered courses need to ask Tien about this.
+        spinnerRegisteredCourses = myDialog.findViewById(R.id.spinner_courses);
         backButton = (Button) myDialog.findViewById(R.id.btn_add_assignment_back);
         textInputCourseName = (TextInputLayout) myDialog.findViewById(R.id.et_course_name);
         textInputAssignmentName = (TextInputLayout) myDialog.findViewById(R.id.et_assignment_name);
@@ -106,6 +110,7 @@ public class AssignmentsFragment extends Fragment {
                 showDatePickerPopup(v);
             }
         });
+
         onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
