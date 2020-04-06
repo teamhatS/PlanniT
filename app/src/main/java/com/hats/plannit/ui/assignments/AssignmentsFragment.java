@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -27,7 +28,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
+import com.hats.plannit.models.Course;
+import com.hats.plannit.ui.courses.CoursesViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,10 +43,12 @@ public class AssignmentsFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private AssignmentsViewModel assignmentsViewModel;
+    private  CoursesViewModel courseViewModel;
 
     private RecyclerView homeRecyclerView;
     private AssignmentsAdapter assignmentsAdapter;
     private FloatingActionButton addAssignmentFab;
+    private List<Course> registeredCourses;
     private Button submitButton;
     private Button backButton;
     private TextView dueDateTextView;
@@ -62,7 +68,17 @@ public class AssignmentsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         assignmentsViewModel = new ViewModelProvider(this).get(AssignmentsViewModel.class);
+        courseViewModel = new ViewModelProvider(this).get(CoursesViewModel.class);
+        courseViewModel.init();
         assignmentsViewModel.init();
+        courseViewModel.getmRegisteredCourseList().observe(getViewLifecycleOwner(), new Observer<List<Course>>()
+        {
+            @Override
+            public void onChanged(List<Course> courseList)
+            {
+                registeredCourses = courseList;
+            }
+        });
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         homeRecyclerView = root.findViewById(R.id.rv_assignment);
         final TextView textView = root.findViewById(R.id.text_home);
@@ -92,8 +108,16 @@ public class AssignmentsFragment extends Fragment {
 
         Boolean complete, expanded;
         myDialog.setContentView(R.layout.fragment_add_assignments);
-        //TODO: populate spinner with Registered courses need to ask Tien about this.
+        //TODO: Set onclock spinner listeners to use the course name as string.
         spinnerRegisteredCourses = myDialog.findViewById(R.id.spinner_courses);
+        ArrayList<String> courseStrings = new ArrayList<>();
+        for(Course course : registeredCourses ){
+            courseStrings.add(course.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_spinner_dropdown_item, courseStrings);
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        spinnerRegisteredCourses.setAdapter(adapter);
+
         backButton = (Button) myDialog.findViewById(R.id.btn_add_assignment_back);
         textInputCourseName = (TextInputLayout) myDialog.findViewById(R.id.et_course_name);
         textInputAssignmentName = (TextInputLayout) myDialog.findViewById(R.id.et_assignment_name);
