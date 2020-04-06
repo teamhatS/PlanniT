@@ -10,7 +10,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,10 +31,12 @@ public class AssignmentRepo {
     private static AssignmentRepo instance;
     private ArrayList<Assignment> dataSet = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser = mAuth.getCurrentUser();
+    private String currentUserEmail;
+    private CollectionReference assignmentRef = db.collection("Student")
+            .document(currentUser.getEmail()).collection("Assignment");
     private String idNum = "123456";
-    private  final CollectionReference assignmentRef =
-            db.collection("Student").document(idNum).collection("Assignment");
-
 
     //Singleton Pattern
     public static AssignmentRepo getInstance(){
@@ -42,6 +47,10 @@ public class AssignmentRepo {
     }
 
     public MutableLiveData<List<Assignment>> getAssignments(){
+        currentUser = mAuth.getCurrentUser();
+        currentUserEmail = currentUser.getEmail();
+        assignmentRef = db.collection("Student")
+                .document(currentUser.getEmail()).collection("Assignment");
         if(dataSet.isEmpty()) loadAssignments();
         MutableLiveData<List<Assignment>> data = new MutableLiveData<>();
         data.setValue(dataSet);
