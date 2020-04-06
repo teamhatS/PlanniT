@@ -10,7 +10,6 @@ public class SignoutViewModel extends ViewModel {
 
     public SignoutViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is sign out fragment");
     }
 
     public LiveData<String> getText() {
