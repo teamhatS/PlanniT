@@ -19,13 +19,15 @@
     <string name="student_id_with_hint">Student ID (9-10 digits)</string>
     <string name="password">Password</string>
     <string name="password_with_hint">Password (>=6 characters)</string>
-    <string name="confirm_password">Confirm password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="email">Email</string>
-    <string name="nickname">Nickname</string>
+    <string name="username">Username</string>
     <string name="create">Create</string>
     <string name="login">Login</string>
-    <string name="sign_up">Sign up</string>
-    <string name="sign_up_text">Not a member?  Become one today.  It\'s free.</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="sign_out_prompt">Click the button below to sign out.\nCome back soon!</string>
+    <string name="sign_up_text">"Don't have an account? Click the button below."</string>
     <string name="create_account">Create Account</string>
     <string name="creating_msg">Better app. Better life.</string>
     <string name="yes">Yes</string>
