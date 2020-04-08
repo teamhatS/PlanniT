@@ -1,13 +1,11 @@
 package com.hats.plannit.ui.splash_screen;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hats.plannit.ui.courses.CoursesFragment;
-import com.hats.plannit.ui.login.LoginView;
+import com.hats.plannit.ui.login.LoginViewModel;
 
 public class SplashScreen extends AppCompatActivity
 {
@@ -28,7 +26,7 @@ public class SplashScreen extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                Intent intent = new Intent(getApplication(), LoginView.class);
+                Intent intent = new Intent(getApplication(), LoginViewModel.class);
                 startActivity(intent);
 
                 finish();

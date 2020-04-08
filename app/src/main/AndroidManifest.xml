@@ -21,11 +21,11 @@
         </activity>
 
         <activity
-            android:name=".ui.login.LoginView">
+            android:name=".ui.login.LoginViewModel">
         </activity>
 
         <activity
-            android:name=".ui.signup.SignUpView">
+            android:name=".ui.signup.SignUpViewModel">
         </activity>
 
         <activity

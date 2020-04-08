@@ -1,12 +1,10 @@
 package com.hats.plannit.ui.signup;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,20 +17,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hats.plannit.MainActivity;
 import com.hats.plannit.R;
-import com.hats.plannit.ui.login.LoginView;
+import com.hats.plannit.ui.login.LoginViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignUpView extends AppCompatActivity
+public class SignUpViewModel extends AppCompatActivity
 {
 
-    private static final String TAG = "SignUpView";
+    private static final String TAG = "SignUpViewModel";
 
     private ProgressDialog pDialog;
 
@@ -64,7 +61,7 @@ public class SignUpView extends AppCompatActivity
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { //back button
-                Intent intent = new Intent(getApplication(), LoginView.class);
+                Intent intent = new Intent(getApplication(), LoginViewModel.class);
                 startActivity(intent);
             }
         });
@@ -91,7 +88,7 @@ public class SignUpView extends AppCompatActivity
             toastMessage("Password must be at least 6 characters.");
         }else if(!password.equals(confirmedPassword)){
             toastMessage("Your password doesn't match.");
-        }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){ //valid email
+        }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){ //valid email address
             toastMessage("Please enter a valid email address.");
         }else{
             final ProgressDialog progressDialog = new ProgressDialog(this); //essential a progress bar
@@ -103,8 +100,7 @@ public class SignUpView extends AppCompatActivity
                 @Override
                 public void onSuccess(AuthResult authResult) {
                     FirebaseUser user = authResult.getUser();
-                    //reference = db.collection(user.getEmail()); //the unique identifier for the collection
-                    reference = db.collection("Student").document(user.getEmail());
+                    reference = db.collection("Student").document(user.getEmail()); //the unique identifier for the collection
                     Map<String, String> userData = new HashMap<>();
                     userData.put("studentId", studentId);
                     userData.put("password", password);
@@ -114,7 +110,7 @@ public class SignUpView extends AppCompatActivity
                         @Override
                         public void onSuccess(Void aVoid) {
                             progressDialog.dismiss();
-                            toastMessage("Student ID " + studentId + " registered.");
+                            toastMessage("Successfully registered " + email);
                             finish();
                             Intent intent = new Intent(getApplication(), MainActivity.class);
                             startActivity(intent);

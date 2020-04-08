@@ -6,14 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.hats.plannit.R;
-import com.hats.plannit.ui.login.LoginView;
-import com.hats.plannit.ui.signup.SignUpView;
+import com.hats.plannit.ui.login.LoginViewModel;
 
 public class SignoutView extends AppCompatActivity {
 
@@ -50,7 +47,7 @@ public class SignoutView extends AppCompatActivity {
                 //mAuth.signOut();
                 FirebaseAuth.getInstance().signOut();
                 toastMessage("Signing out...");
-                Intent intent = new Intent(getApplication(), LoginView.class);
+                Intent intent = new Intent(getApplication(), LoginViewModel.class);
                 startActivity(intent);
             }
         });

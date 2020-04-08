@@ -22,11 +22,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hats.plannit.MainActivity;
 import com.hats.plannit.R;
-import com.hats.plannit.ui.signup.SignUpView;
+import com.hats.plannit.ui.signup.SignUpViewModel;
 
-public class LoginView extends AppCompatActivity
+public class LoginViewModel extends AppCompatActivity
 {
-    private static final String TAG = "LoginView";
+    private static final String TAG = "LoginViewModel";
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -39,7 +39,6 @@ public class LoginView extends AppCompatActivity
     private EditText nEmail, nPassword;
     private Button btnLogIn;
 
-    private CalendarView c;
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -77,7 +76,7 @@ public class LoginView extends AppCompatActivity
                 String password = nPassword.getText().toString().trim();
                 if(!email.equals("") && !password.equals("")){ //both fields must have something inputted
                     mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(LoginView.this, new OnCompleteListener<AuthResult>() { //checks for email and password
+                            .addOnCompleteListener(LoginViewModel.this, new OnCompleteListener<AuthResult>() { //checks for email and password
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
@@ -100,7 +99,7 @@ public class LoginView extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getApplication(), SignUpView.class);
+                Intent intent = new Intent(getApplication(), SignUpViewModel.class);
                 startActivity(intent);
             }
         });
