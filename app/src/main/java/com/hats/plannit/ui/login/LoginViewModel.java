@@ -99,7 +99,7 @@ public class LoginViewModel extends AppCompatActivity
         String password = nPassword.getText().toString().trim();
         if(!email.equals("") && !password.equals("")){ //both fields must have something inputted
             final ProgressDialog progressDialog = new ProgressDialog(this); //essential a progress bar
-            progressDialog.setMessage("Logging in..."); //display loggin in notification to show progress
+            progressDialog.setMessage("Logging in..."); //display progress for logging in
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -109,18 +109,18 @@ public class LoginViewModel extends AppCompatActivity
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                reference = db.collection("Student").document(user.getEmail());
+                                reference = db.collection("Student").document(user.getEmail()); //document reference for the current user
                                 reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         if(documentSnapshot.exists()){
                                             progressDialog.dismiss();
-                                            String username = documentSnapshot.getString("username"); //retrieving the username of the user
+                                            String username = documentSnapshot.getString("username"); //retrieve the username of the user
                                             Intent intent = new Intent(getApplication(), MainActivity.class); //if successful it goes into app
                                             startActivity(intent);
                                             toastMessage("Welcome back " + username + "!");
                                         }else{
-                                            toastMessage("Document does not exist.");
+                                            toastMessage("User does not exist.");
                                         }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
