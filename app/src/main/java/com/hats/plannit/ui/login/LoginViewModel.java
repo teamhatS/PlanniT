@@ -130,7 +130,7 @@ public class LoginViewModel extends AppCompatActivity
                                     }
                                 });
                             } else {
-                                toastMessage("Sign in failed.");
+                                toastMessage("Log in failed.");
                             }
                         }
                     });
