@@ -2,56 +2,26 @@ package com.hats.plannit.models;
 
 public class Student {
 
-    private String studentID;//documentID
-    private String firstName;
-    private String lastName;
+    private String studentId;//documentID
     private String email;
     private String password;
     private String username;
-    private Boolean loggedIn;
 
     public Student(){}
 
-    public Student(String studentID, String firstName, String lastName, String email, String password, String username, Boolean loggedIn) {
-        this.studentID = studentID;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Student(String studentID, String email, String password, String username) {
+        this.studentId = studentID;
         this.email = email;
         this.password = password;
         this.username = username;
-        this.loggedIn = loggedIn;
-    }
-
-    public Boolean getLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(Boolean loggedIn) {
-        this.loggedIn = loggedIn;
     }
 
     public String getStudentID() {
-        return studentID;
+        return studentId;
     }
 
     public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.studentId = studentID;
     }
 
     public String getEmail() {
