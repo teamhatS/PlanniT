@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -17,9 +18,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
+import com.hats.plannit.models.Course;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,6 +34,7 @@ public class SearchFragment extends Fragment {
 
     private SearchViewModel searchViewModel;
     private List<Assignment> assignmentList = new ArrayList<>();
+    List<String> checked = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +50,31 @@ public class SearchFragment extends Fragment {
         customersRecyclerView.setAdapter(searchAdapter);
         customersRecyclerView.setItemAnimator(new DefaultItemAnimator());
         customersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        List<Course> courses = searchViewModel.getmRegisteredCourseList().getValue();
+        LinearLayout ll = root.findViewById(R.id.checkboxes2);
+        for (Course c : courses) {
+            CheckBox cb = new CheckBox(getContext());
+            cb.setText(c.getName());
+            cb.setWidth(400);
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        checked.add(buttonView.getText().toString());
+                    }
+                    else
+                        checked.remove(buttonView.getText().toString());
 
+                    assignmentList.clear();
+                    for(Assignment a : o)
+                        if(checked.contains(a.getCourseName()))
+                            assignmentList.add(a);
+                    searchAdapter.notifyDataSetChanged();
+
+                }
+            });
+            ll.addView(cb);
+        }
         final CheckBox cb1 = root.findViewById(R.id.search_cb1);
         final CheckBox cb2 = root.findViewById(R.id.search_cb2);
         final SearchView searchView = root.findViewById(R.id.search);
@@ -99,7 +129,7 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 assignmentList.clear();
                 for(Assignment a : o)
-                    if(a.getCourseName().equals(searchView.getQuery().toString()))
+                    if(a.getCourseName().equals(searchView.getQuery().toString()) || a.getDescription().contains(searchView.getQuery().toString()))
                         assignmentList.add(a);
                 searchAdapter.notifyDataSetChanged();
 

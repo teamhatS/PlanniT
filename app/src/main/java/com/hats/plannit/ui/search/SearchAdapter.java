@@ -1,6 +1,7 @@
 package com.hats.plannit.ui.search;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.textViewAssignmentName.setText(assignmentArrayList.get(position).getAssignmentName());
         holder.textViewAssignmentDate.setText(assignmentArrayList.get(position).getDate());
         holder.textViewAssignmentDescription.setText(assignmentArrayList.get(position).getDescription());
+        holder.checkboxAssignmentComplete.setChecked(assignmentArrayList.get(position).getComplete());
+        if(!assignmentArrayList.get(position).getComplete())
+            holder.parentLayout.setBackgroundColor(Color.parseColor("#2ecc71"));
 
 //        final Assignment a = assignmentArrayList.get(position);
 //        holder.assignmentDescription.setVisibility(View.GONE);
