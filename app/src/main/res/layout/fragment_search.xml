@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorBackground"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
     <SearchView
         android:id="@+id/search"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:queryHint="Enter Assignment Info"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </SearchView>
 
@@ -21,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search"
-        android:padding="20dp">
+        app:layout_constraintTop_toBottomOf="@id/search">
 
         <CheckBox
             android:id="@+id/search_cb1"
@@ -40,12 +40,25 @@
             android:text="Due Date" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/checkboxes2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkboxes">
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="200dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkboxes"
-        android:paddingBottom="50dp"/>
+        app:layout_constraintTop_toBottomOf="@id/checkboxes2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

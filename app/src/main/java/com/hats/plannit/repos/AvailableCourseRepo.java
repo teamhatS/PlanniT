@@ -10,6 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -29,8 +31,11 @@ public class AvailableCourseRepo
     private List<Subject> availableSubjectList = new ArrayList<>();
     private List<Course> registeredCourseList = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser = auth.getCurrentUser();
     private final CollectionReference availableSubjectRef = db.collection("AvailableSubject");
-    private final CollectionReference registeredCourseRef = db.collection("Student").document("123456").collection("RegisteredCourse");
+    //private final CollectionReference registeredCourseRef = db.collection("Student").document("123456").collection("RegisteredCourse");
+    private final CollectionReference registeredCourseRef = db.collection("Student").document(currentUser.getEmail()).collection("RegisteredCourse");
 
     public static AvailableCourseRepo getInstance()
     {
