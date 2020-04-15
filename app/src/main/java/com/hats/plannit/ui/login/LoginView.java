@@ -117,16 +117,19 @@ public class LoginView extends AppCompatActivity
                                             startActivity(intent);
                                             toastMessage("Welcome back " + username);
                                         }else{
+                                            progressDialog.dismiss();
                                             toastMessage("User does not exist.");
                                         }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
+                                        progressDialog.dismiss();
                                         toastMessage("Error.");
                                     }
                                 });
                             } else {
+                                progressDialog.dismiss();
                                 toastMessage("Sign in failed.");
                             }
                         }
