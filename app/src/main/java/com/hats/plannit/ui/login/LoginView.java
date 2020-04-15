@@ -1,11 +1,11 @@
 package com.hats.plannit.ui.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,11 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hats.plannit.MainActivity;
 import com.hats.plannit.R;
@@ -32,14 +36,13 @@ public class LoginView extends AppCompatActivity
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     FirebaseFirestore db;
-    CollectionReference reference;
+    DocumentReference reference;
 
     private TextView sign_up_text;
 
     private EditText nEmail, nPassword;
     private Button btnLogIn;
 
-    private CalendarView c;
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -73,25 +76,7 @@ public class LoginView extends AppCompatActivity
         btnLogIn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                final String email = nEmail.getText().toString().trim();
-                String password = nPassword.getText().toString().trim();
-                if(!email.equals("") && !password.equals("")){ //both fields must have something inputted
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(LoginView.this, new OnCompleteListener<AuthResult>() { //checks for email and password
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Intent intent = new Intent(getApplication(), MainActivity.class); //if successful it goes into app
-                                        startActivity(intent);
-                                        toastMessage("Signed in with " + email);
-                                    } else {
-                                        toastMessage("Sign in failed.");
-                                    }
-                                }
-                            });
-                }else{
-                    toastMessage("You didn't fill in all the fields.");
-                }
+                userLogin();
             }
         });
 
@@ -104,6 +89,51 @@ public class LoginView extends AppCompatActivity
                 startActivity(intent);
             }
         });
+    }
+
+    private void userLogin(){
+        final String email = nEmail.getText().toString().trim();
+        String password = nPassword.getText().toString().trim();
+        if(!email.equals("") && !password.equals("")){ //both fields must have something inputted
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Logging in...");
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(LoginView.this, new OnCompleteListener<AuthResult>() { //checks for email and password
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                reference = db.collection("Student").document(user.getEmail());
+                                reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if(documentSnapshot.exists()){
+                                            progressDialog.dismiss();
+                                            String username = documentSnapshot.getString("username");
+                                            Intent intent = new Intent(getApplication(), MainActivity.class); //if successful it goes into app
+                                            startActivity(intent);
+                                            toastMessage("Welcome back " + username);
+                                        }else{
+                                            toastMessage("User does not exist.");
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        toastMessage("Error.");
+                                    }
+                                });
+                            } else {
+                                toastMessage("Sign in failed.");
+                            }
+                        }
+                    });
+        }else{
+            toastMessage("You didn't fill in all the fields.");
+        }
     }
 
     @Override
@@ -121,6 +151,6 @@ public class LoginView extends AppCompatActivity
     }
 
     private void toastMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
