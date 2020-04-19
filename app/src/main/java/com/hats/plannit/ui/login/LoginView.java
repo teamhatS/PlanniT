@@ -1,7 +1,9 @@
 package com.hats.plannit.ui.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +50,9 @@ public class LoginView extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view);
 
+        AudioManager manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        manager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
+        
         nEmail = findViewById(R.id.email_edit_text);
         nPassword = findViewById(R.id.password_edit_text);
         btnLogIn = findViewById(R.id.login_button);
