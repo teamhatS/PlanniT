@@ -34,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 import com.hats.plannit.models.Student;
+import com.hats.plannit.ui.login.LoginView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,7 @@ public class SettingsFragment extends Fragment {
         buttonAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 showAccountPopup(v);
             }
         });
@@ -93,6 +95,7 @@ public class SettingsFragment extends Fragment {
         buttonNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 showNotificationPopup(v);
             }
         });
@@ -100,6 +103,7 @@ public class SettingsFragment extends Fragment {
         btnAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 showAboutPopup(v);
             }
         });
@@ -107,6 +111,7 @@ public class SettingsFragment extends Fragment {
         btnContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 showContactPopup(v);
             }
         });
@@ -134,6 +139,7 @@ public class SettingsFragment extends Fragment {
         submitAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 String userName = editTextLayoutUsername.getEditText().getText().toString().trim();
                 String password = editTextLayoutPassword.getEditText().getText().toString();
                 String passwordConfirm = editTextLayoutConfirmPassword.getEditText().getText().toString();
@@ -156,6 +162,7 @@ public class SettingsFragment extends Fragment {
         backAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 myDialog.dismiss();
             }
         });
