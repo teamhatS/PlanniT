@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -43,8 +46,23 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.textViewAssignmentDate.setText(assignmentArrayList.get(position).getDate());
         holder.textViewAssignmentDescription.setText(assignmentArrayList.get(position).getDescription());
         holder.checkboxAssignmentComplete.setChecked(assignmentArrayList.get(position).getComplete());
-        if(!assignmentArrayList.get(position).getComplete())
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/M/dd");
+        String formattedDate = df.format(c);
+        if(assignmentArrayList.get(position).getDate().equals(formattedDate))
             holder.parentLayout.setBackgroundColor(Color.parseColor("#2ecc71"));
+        else if(assignmentArrayList.get(position).getDate().compareTo(formattedDate) < 0)
+            holder.parentLayout.setBackgroundColor(Color.parseColor("#ff0000"));
+
+//        if(assignmentArrayList.get(position).getDate().equals(formattedDate)){
+//            holder.textViewAssignmentDate.setText(assignmentArrayList.get(position).getDate() + "                        DUE TODAY");
+//            holder.textViewAssignmentDate.setTextColor(Color.parseColor("#2ecc71"));
+//        }
+//        if(assignmentArrayList.get(position).getDate().compareTo(formattedDate) < 0){
+//            holder.textViewAssignmentDate.setText(assignmentArrayList.get(position).getDate() + "                          PAST DUE");
+//            holder.textViewAssignmentDate.setTextColor(Color.parseColor("#ff0000"));
+//
+//        }
 
 //        final Assignment a = assignmentArrayList.get(position);
 //        holder.assignmentDescription.setVisibility(View.GONE);
