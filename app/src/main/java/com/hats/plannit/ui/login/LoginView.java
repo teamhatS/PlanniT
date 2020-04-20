@@ -1,7 +1,10 @@
 package com.hats.plannit.ui.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,10 +46,17 @@ public class LoginView extends AppCompatActivity
     private EditText nEmail, nPassword;
     private Button btnLogIn;
 
+    public static MediaPlayer mp;
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view);
+
+        AudioManager manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        manager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
+
+        mp = MediaPlayer.create(getApplication(), R.raw.touch_sound);
 
         nEmail = findViewById(R.id.email_edit_text);
         nPassword = findViewById(R.id.password_edit_text);
@@ -76,6 +86,7 @@ public class LoginView extends AppCompatActivity
         btnLogIn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                mp.start();
                 userLogin();
             }
         });
@@ -85,6 +96,7 @@ public class LoginView extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                mp.start();
                 Intent intent = new Intent(getApplication(), SignUpView.class);
                 startActivity(intent);
             }

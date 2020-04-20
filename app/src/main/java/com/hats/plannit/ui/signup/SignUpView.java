@@ -62,6 +62,7 @@ public class SignUpView extends AppCompatActivity
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { //back button
+                LoginView.mp.start();
                 Intent intent = new Intent(getApplication(), LoginView.class);
                 startActivity(intent);
             }
@@ -70,6 +71,7 @@ public class SignUpView extends AppCompatActivity
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                LoginView.mp.start();
                 startUserRegistration();
             }
         });
