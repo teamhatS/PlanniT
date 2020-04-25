@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hats.plannit.R;
+import com.hats.plannit.ui.login.LoginView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class AddCoursesView extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                LoginView.mp.start();
                 if(!CourseAsset.courses.isEmpty())
                 {
                     List<CheckedTextView> duplicateCourseList = CourseAsset.courseViewModel.addCourses(CourseAsset.courseListToBeAdded, CourseAsset.registeredCourseList, CourseAsset.checkedTextViewList, getApplicationContext());
@@ -71,6 +73,7 @@ public class AddCoursesView extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                LoginView.mp.start();
                 CourseAsset.courseListToBeAdded = new ArrayList<>();
                 CourseAsset.checkedTextViewList = new ArrayList<>();
                 CourseAsset.courses = new ArrayList<>();

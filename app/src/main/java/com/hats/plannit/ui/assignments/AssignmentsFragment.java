@@ -31,6 +31,7 @@ import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 import com.hats.plannit.models.Course;
 import com.hats.plannit.ui.courses.CoursesViewModel;
+import com.hats.plannit.ui.login.LoginView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,6 +96,7 @@ public class AssignmentsFragment extends Fragment {
         addAssignmentFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 showAddAssignmentPopup(v);
             }
         });
@@ -120,6 +122,7 @@ public class AssignmentsFragment extends Fragment {
         spinnerRegisteredCourses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                LoginView.mp.start();
                 courseSelected = registeredCourses.get(position).getName();
             }
 
@@ -141,6 +144,7 @@ public class AssignmentsFragment extends Fragment {
         dueDateIconImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 showDatePickerPopup(v);
             }
         });
@@ -148,6 +152,7 @@ public class AssignmentsFragment extends Fragment {
         onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                LoginView.mp.start();
                 Log.d(TAG, "onDateSet: " + year + "/");
                 date = year + "/" +(month + 1) + "/" + dayOfMonth;
                 dueDateTextView.setText(date);
@@ -157,6 +162,7 @@ public class AssignmentsFragment extends Fragment {
         dueTimeIconImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 showTimePickerPopup(v);
             }
         });
@@ -164,6 +170,7 @@ public class AssignmentsFragment extends Fragment {
         onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                LoginView.mp.start();
                 Log.d(TAG, "onDateSet: " + minute + "/");
                 time = hourOfDay + ":" + minute;
                 dueTimeTextView.setText(time);
@@ -174,6 +181,7 @@ public class AssignmentsFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginView.mp.start();
                 String courseName =  courseSelected;
                 String assignmentName = textInputAssignmentName.getEditText().getText().toString();
                 String description = textInputAssignmentDesc.getEditText().getText().toString();
@@ -198,6 +206,7 @@ public class AssignmentsFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
+                LoginView.mp.start();
                 myDialog.dismiss();
             }
         });

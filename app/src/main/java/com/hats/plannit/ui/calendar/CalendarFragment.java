@@ -21,6 +21,7 @@ import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 import com.hats.plannit.ui.assignments.AssignmentsAdapter;
+import com.hats.plannit.ui.login.LoginView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,6 +65,7 @@ public class CalendarFragment extends Fragment
             @Override
             public void onDayClick(Date dateClicked)
             {
+                LoginView.mp.start();
                 CalendarRecyclerViewAdapter calendarRecyclerViewAdapter = new CalendarRecyclerViewAdapter(assignments.get(dateClicked.getTime()));
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 assignmentRecyclerView.setLayoutManager(layoutManager);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -43,7 +44,7 @@ public class SearchFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
-        RecyclerView customersRecyclerView =  root.findViewById(R.id.rv_search);
+        final RecyclerView customersRecyclerView =  root.findViewById(R.id.rv_search);
         final List<Assignment> o = searchViewModel.getmAssignmentList().getValue();
         assignmentList.addAll(o);
         final SearchAdapter searchAdapter = new SearchAdapter(assignmentList, this.getContext());
@@ -52,10 +53,12 @@ public class SearchFragment extends Fragment {
         customersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         List<Course> courses = searchViewModel.getmRegisteredCourseList().getValue();
         LinearLayout ll = root.findViewById(R.id.checkboxes2);
+        final ArrayList<CheckBox> checkBoxes = new ArrayList<>();
         for (Course c : courses) {
             CheckBox cb = new CheckBox(getContext());
+            checkBoxes.add(cb);
             cb.setText(c.getName());
-            cb.setWidth(400);
+            cb.setWidth(200);
             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -86,6 +89,7 @@ public class SearchFragment extends Fragment {
         cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                customersRecyclerView.setAdapter(searchAdapter);
                 if (isChecked) {
                     Collections.sort(assignmentList, new Comparator<Assignment>() {
                         @Override
@@ -104,6 +108,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 assignmentList.clear();
                 assignmentList.addAll(o);
+                searchView.setQuery("", false);
                 searchAdapter.notifyDataSetChanged();
             }
         });
@@ -119,6 +124,7 @@ public class SearchFragment extends Fragment {
                             return a.getDate().compareTo(b.getDate());
                         }
                     });
+                    customersRecyclerView.setAdapter(searchAdapter);
                     searchAdapter.notifyDataSetChanged();
                 }
 
@@ -131,6 +137,7 @@ public class SearchFragment extends Fragment {
                 for(Assignment a : o)
                     if(a.getCourseName().equals(searchView.getQuery().toString()) || a.getDescription().contains(searchView.getQuery().toString()))
                         assignmentList.add(a);
+                customersRecyclerView.setAdapter(searchAdapter);
                 searchAdapter.notifyDataSetChanged();
 
                 return false;
@@ -139,6 +146,21 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+        Button btn = root.findViewById(R.id.button3);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cb1.setChecked(false);
+                cb2.setChecked(false);
+                for(CheckBox c : checkBoxes)
+                    c.setChecked(false);
+                assignmentList.clear();
+                assignmentList.addAll(o);
+                searchAdapter.notifyDataSetChanged();
+                customersRecyclerView.setAdapter(searchAdapter);
+
             }
         });
 

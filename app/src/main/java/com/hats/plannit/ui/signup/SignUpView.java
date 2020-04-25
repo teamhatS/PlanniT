@@ -1,12 +1,10 @@
 package com.hats.plannit.ui.signup;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,11 +17,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hats.plannit.MainActivity;
 import com.hats.plannit.R;
+import com.hats.plannit.models.Student;
 import com.hats.plannit.ui.login.LoginView;
 
 import java.util.HashMap;
@@ -64,6 +62,7 @@ public class SignUpView extends AppCompatActivity
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { //back button
+                LoginView.mp.start();
                 Intent intent = new Intent(getApplication(), LoginView.class);
                 startActivity(intent);
             }
@@ -72,6 +71,7 @@ public class SignUpView extends AppCompatActivity
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                LoginView.mp.start();
                 startUserRegistration();
             }
         });
@@ -104,13 +104,17 @@ public class SignUpView extends AppCompatActivity
                 public void onSuccess(AuthResult authResult) {
                     FirebaseUser user = authResult.getUser();
                     //reference = db.collection(user.getEmail()); //the unique identifier for the collection
+                    //cannot use Hashmap has to use models for Students
                     reference = db.collection("Student").document(user.getEmail());
                     Map<String, String> userData = new HashMap<>();
                     userData.put("studentId", studentId);
                     userData.put("password", password);
+                    userData.put("email", email);
                     userData.put("username", username);
+
+                    Student newStudent = new Student(studentId, email, password, username);
                     progressDialog.setMessage("Saving user data...");
-                    reference.set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    reference.set(newStudent).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             progressDialog.dismiss();
@@ -140,7 +144,7 @@ public class SignUpView extends AppCompatActivity
     }
 
     private void toastMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
 }

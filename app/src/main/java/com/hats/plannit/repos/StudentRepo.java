@@ -5,16 +5,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.hats.plannit.models.Student;
 
 import java.util.ArrayList;
@@ -24,11 +21,14 @@ public class StudentRepo {
 
     private static final String TAG = "StudentRepo";
     private static StudentRepo instance;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser = mAuth.getCurrentUser();
     private List<Student> dataSet = new ArrayList<>();
     private Student currentStudent; // the student logged in;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final CollectionReference studentRef = db.collection("Student");
-
+    private DocumentReference studentRef = db.collection("Student")
+            .document(currentUser.getEmail());
+//    private final CollectionReference studentRef = db.collection("Student");
     //Singleton Pattern
     public static StudentRepo getInstance(){
         if(instance == null){
@@ -37,68 +37,23 @@ public class StudentRepo {
         return instance;
     }
 
-    public  MutableLiveData<List<Student>> getStudents(){
-        if(dataSet.isEmpty()) loadStudents();
-        MutableLiveData<List<Student>> data = new MutableLiveData<>();
-        data.setValue(dataSet);
-        return data;
-    }
+    public Student getLoggedInStudent(){
+         studentRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+             @Override
+             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                 currentStudent = documentSnapshot.toObject(Student.class);
+             }
+         }).addOnFailureListener(new OnFailureListener() {
+             @Override
+             public void onFailure(@NonNull Exception e) {
+             }
+         });
 
-    private void loadStudents(){
-        //listens for updates on Collection in realtime
-        collectionListener();
-    }
-
-    private void collectionListener( ){
-
-        studentRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if(e != null){
-                    Log.w(TAG,"Listen Failed", e );
-                    return;
-                }
-
-                studentRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                        if(!queryDocumentSnapshots.isEmpty()){
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for(DocumentSnapshot documentSnapshot : list){
-                                if(!dataSet.contains(documentSnapshot.toObject(Student.class))) {
-                                    Student newStudent = documentSnapshot.toObject(Student.class);
-                                    dataSet.add(newStudent);
-                                    Log.d(TAG, "onSuccess: " + dataSet);
-                                }
-                            }
-                        }
-
-                        Log.e(TAG, "onSuccess: added" );
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "onFailure: " + e.toString());
-                    }
-                });
-            }
-        });
-    }
-
-    public Student getCurrentStudent(){
-        for(Student student : dataSet){
-            if(student.getLoggedIn()){
-                student = currentStudent; //assigns to current student..probably won't need.
-                return student;
-            }
-        }
-        return null;
+         return currentStudent;
     }
 
     public void updateStudentAccount(final Context context, Student student){
-        studentRef.document(student.getStudentID()).set(student)
+        studentRef.set(student)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
