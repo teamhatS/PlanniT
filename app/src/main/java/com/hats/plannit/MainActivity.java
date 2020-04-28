@@ -1,5 +1,6 @@
 package com.hats.plannit;
 
+import android.media.MediaPlayer;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        MediaPlayer mp = MediaPlayer.create(getApplication(), R.raw.touch_sound);
+        mp.start();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
