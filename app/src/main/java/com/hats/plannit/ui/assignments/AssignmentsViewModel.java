@@ -90,7 +90,7 @@ public class AssignmentsViewModel extends ViewModel {
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
                     String dateAndTime = newAssignment.getDate() + " " + newAssignment.getTime() + ":00";
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd HH:mm:ss");
                     Date date = simpleDateFormat.parse(dateAndTime);
 
                     long dateAndTimeInMillis = date.getTime();
