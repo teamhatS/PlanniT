@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
 import com.hats.plannit.models.Subject;
+import com.hats.plannit.ui.login.LoginView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,6 +98,7 @@ public class AvailableCourseListViewAdapter extends BaseExpandableListAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
+        LoginView.mp.start();
         String subject = ((Subject)getGroup(groupPosition)).getSubjectName();
 
         if(convertView == null)
@@ -147,6 +149,7 @@ public class AvailableCourseListViewAdapter extends BaseExpandableListAdapter
             @Override
             public void onClick(final View view)
             {
+                LoginView.mp.start();
                 CheckedTextView checkedTextView = (CheckedTextView)view;
 
                 if(viewHolder.newCourse.isChecked())

@@ -22,6 +22,7 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.hats.plannit.R;
 import com.hats.plannit.models.Assignment;
 import com.hats.plannit.ui.assignments.AssignmentsAdapter;
+import com.hats.plannit.ui.login.LoginView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,6 +81,7 @@ public class WeekDayCalendarFragment extends Fragment implements WeekView.EventC
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        LoginView.mp.start();
         int id = item.getItemId();
 
         switch(id)
@@ -144,6 +146,7 @@ public class WeekDayCalendarFragment extends Fragment implements WeekView.EventC
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect)
     {
+        LoginView.mp.start();
         Toast.makeText(getContext(), event.getName(), Toast.LENGTH_LONG).show();
     }
 

@@ -178,7 +178,7 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
                 {
                     String dateAndTime = assignmentsArrayList.get(position).getDate() + " " + assignmentsArrayList.get(position).getTime();
 
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd hh:mm");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/M/dd HH:mm");
 
                     Date dueDate = simpleDateFormat.parse(dateAndTime);
                     Date currentDate = new Date();
@@ -186,6 +186,10 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
                     if(currentDate.getTime() >= dueDate.getTime())
                     {
                         parentLayout.setBackgroundColor(parentLayout.getResources().getColor(R.color.red));
+                    }
+                    else
+                    {
+                        parentLayout.setBackgroundColor(parentLayout.getResources().getColor(R.color.black));
                     }
                 }
             }

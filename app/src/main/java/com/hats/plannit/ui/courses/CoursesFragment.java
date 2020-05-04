@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hats.plannit.R;
 import com.hats.plannit.models.Course;
+import com.hats.plannit.ui.login.LoginView;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class CoursesFragment extends Fragment implements OnItemClicked
             @Override
             public void onClick(View view)
             {
+                LoginView.mp.start();
                 Intent intent = new Intent(getActivity(), AddCoursesView.class);
                 startActivityForResult(intent, 1);
             }
