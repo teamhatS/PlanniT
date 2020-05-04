@@ -79,7 +79,8 @@ public class AssignmentsViewModel extends ViewModel {
             @Override
             public void run()
             {
-                try {
+                try
+                {
                     Intent intent = new Intent(context, AlertReceiver.class);
                     intent.putExtra("receiver", email);
                     intent.putExtra("course", newAssignment.getCourseName());
@@ -98,13 +99,17 @@ public class AssignmentsViewModel extends ViewModel {
                     long oneDayInMillis = 86400000;
                     long oneHourInMillis = 3600000;
 
+                    System.out.println(dateAndTimeInMillis - currentTimeInMillis);
+
                     if(dateAndTimeInMillis - currentTimeInMillis > oneDayInMillis)
                     {
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - oneDayInMillis, pendingIntent);
+                        long timeToTrigger = dateAndTimeInMillis - currentTimeInMillis - oneDayInMillis;
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeInMillis + timeToTrigger, pendingIntent);
                     }
                     else if(dateAndTimeInMillis - currentTimeInMillis > oneHourInMillis)
                     {
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, dateAndTimeInMillis - oneHourInMillis, pendingIntent);
+                        long timeToTrigger = dateAndTimeInMillis - currentTimeInMillis - oneHourInMillis;
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeInMillis + timeToTrigger, pendingIntent);
                     }
                 }
                 catch (ParseException e)

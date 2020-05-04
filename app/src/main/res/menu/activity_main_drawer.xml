@@ -24,6 +24,12 @@
 
     <item android:title="Tools">
         <menu>
+
+            <item
+                android:id="@+id/nav_map"
+                android:icon="@drawable/map"
+                android:title="Map" />
+
             <item
                 android:id="@+id/nav_help"
                 android:icon="@android:drawable/ic_menu_help"
@@ -37,7 +43,9 @@
                 android:id="@+id/nav_signout"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/menu_signout" />
+
         </menu>
+
     </item>
 
 </menu>

@@ -195,7 +195,6 @@ public class AssignmentsFragment extends Fragment {
                 if(added){
                     clearFields();
                 }
-
             }
         });
 
